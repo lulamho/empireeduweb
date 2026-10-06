@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="116.5" height="112.5" viewBox="0 0 116.5 112.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<path id="Vector" d="M17.25 18.25H83.25C94.25 18.25 101.25 26.25 101.25 36.25V67.25C101.25 77.25 94.25 84.25 84.25 84.25H51.25L31.25 100.25L34.25 84.25H17.25C7.25 84.25 1.25 77.25 1.25 67.25V36.25C1.25 26.25 7.25 18.25 17.25 18.25Z" fill="#EEE0FD" stroke="#A964F7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M43.25 49.25C31.25 35.25 19.25 52.25 31.25 61.25L43.25 71.25L55.25 61.25C67.25 51.25 54.25 36.25 43.25 49.25Z" fill="#A964F7"/>
+<g id="Vector_3">
+<path d="M83.25 66.25H115.25V99.25H103.25L110.25 111.25L91.25 99.25H73.25V82.25" fill="#CCEBEE"/>
+<path d="M83.25 66.25H115.25V99.25H103.25L110.25 111.25L91.25 99.25H73.25V82.25" stroke="#009CAB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="Vector_4" d="M99.25 1.25L102.25 9.25L110.25 12.25L102.25 15.25L99.25 23.25L96.25 15.25L88.25 12.25L96.25 9.25L99.25 1.25Z" fill="#FDE1B4" stroke="#F99D0D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

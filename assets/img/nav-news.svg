@@ -1,0 +1,21 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Nav / News / Soft gradient">
+<path id="Vector" d="M2.5 2.5H15C15.442 2.5 15.866 2.67559 16.1785 2.98816C16.4911 3.30072 16.6667 3.72464 16.6667 4.16667V15.8333C16.6667 16.4964 16.4033 17.1323 15.9344 17.6011C15.4656 18.0699 14.8297 18.3333 14.1667 18.3333H4.16667C3.50363 18.3333 2.86774 18.0699 2.3989 17.6011C1.93006 17.1323 1.66667 16.4964 1.66667 15.8333V3.33333C1.66667 3.11232 1.75446 2.90036 1.91074 2.74408C2.06702 2.5878 2.27899 2.5 2.5 2.5Z" fill="url(#paint0_linear_0_95)"/>
+<path id="Vector_2" opacity="0.7" d="M16.6667 7.5H18.3333V15.8333C18.3333 17.5 17.5 18.3333 15.8333 18.3333" fill="url(#paint1_linear_0_95)"/>
+<path id="Vector_3" opacity="0.85" d="M7.5 5.83333H5C4.53976 5.83333 4.16667 6.20643 4.16667 6.66667V9.16667C4.16667 9.6269 4.53976 10 5 10H7.5C7.96024 10 8.33333 9.6269 8.33333 9.16667V6.66667C8.33333 6.20643 7.96024 5.83333 7.5 5.83333Z" fill="white"/>
+<g id="Vector_4" opacity="0.8">
+<path d="M10.8333 5.83333H14.1667ZM10.8333 9.16667H14.1667ZM4.16667 13.3333H14.1667ZM4.16667 15.8333H10.8333Z" fill="black"/>
+<path d="M10.8333 5.83333H14.1667M10.8333 9.16667H14.1667M4.16667 13.3333H14.1667M4.16667 15.8333H10.8333" stroke="white" stroke-width="1.16667" stroke-linecap="round"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_95" x1="1.66667" y1="2.5" x2="17.4769" y2="17.4781" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FCD290"/>
+<stop offset="1" stop-color="#F99D0D"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_95" x1="15.8333" y1="7.5" x2="20.5805" y2="8.59551" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FCD290"/>
+<stop offset="1" stop-color="#F99D0D"/>
+</linearGradient>
+</defs>
+</svg>
