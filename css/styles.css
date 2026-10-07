@@ -200,6 +200,7 @@ button { cursor: pointer; border: 0; background: none; padding: 0; }
   box-shadow: 0 8px 28px rgba(23, 23, 23, .08), inset 0 0 0 1px rgba(255, 255, 255, .6);
 }
 .site-header__logo { flex: none; }
+.site-header__logo img { width: 184px; height: 31.884px; } /* 202×35 artwork scaled as in Figma */
 .site-header__cta { flex: none; height: 48px; }
 
 .nav { min-width: 0; }
@@ -781,7 +782,7 @@ button { cursor: pointer; border: 0; background: none; padding: 0; }
   .h-xxl { font-size: 40px; line-height: 48px; letter-spacing: -0.5px; }
   .h-xl { font-size: 34px; line-height: 42px; }
   .h-l { font-size: 30px; line-height: 38px; }
-  .site-header__logo img { width: 140px; height: auto; }
+  .site-header__logo img { width: 140px; height: 24.26px; }
   .site-header__cta { height: 40px; padding: 8px 16px; font-size: 14px; }
   .hero__lead br { display: none; }
   .exam-cards, .col__cards, .free-list { flex-direction: column; }
