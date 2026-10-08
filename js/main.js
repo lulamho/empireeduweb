@@ -136,6 +136,7 @@
     links.forEach(link => {
       link.addEventListener('pointerenter', () => moveTo(link));
       link.addEventListener('focus', () => moveTo(link));
+      if (link.hasAttribute('data-menu-trigger')) return; // "More" opens a menu, it isn't a page
       link.addEventListener('click', () => {
         active.classList.remove('is-active');
         active.removeAttribute('aria-current');
@@ -153,8 +154,103 @@
 
     const snap = () => moveTo(under || active, true);
     window.addEventListener('resize', snap);
+    document.addEventListener('authchange', () => moveTo(active, true));
     document.fonts && document.fonts.ready.then(snap);
     moveTo(active, true);
+  }
+
+  /* ------------------------------------------------------------------------
+     Header menus — "More" (desktop), profile, and the mobile panel.
+     One menu open at a time; closes on outside click, Esc, link click or resize.
+     ------------------------------------------------------------------------ */
+  function initMenus() {
+    const header = $('[data-header]');
+    if (!header) return;
+    const triggers = $$('[data-menu-trigger]', header);
+    const menuOf = trigger => $(`[data-menu="${trigger.dataset.menuTrigger}"]`, header);
+    let openTrigger = null;
+
+    function placeMoreMenu(trigger, menu) {
+      const left = trigger.getBoundingClientRect().left - header.getBoundingClientRect().left;
+      menu.style.setProperty('--menu-left', `${left}px`);
+    }
+
+    function close(trigger = openTrigger, { focus = false } = {}) {
+      if (!trigger) return;
+      const menu = menuOf(trigger);
+      trigger.setAttribute('aria-expanded', 'false');
+      if (trigger.classList.contains('burger')) trigger.setAttribute('aria-label', 'Mở menu');
+      menu.classList.remove('is-open');
+      const hide = () => { if (!menu.classList.contains('is-open')) menu.hidden = true; };
+      reduceMotion ? hide() : setTimeout(hide, 250);
+      if (openTrigger === trigger) openTrigger = null;
+      if (focus) trigger.focus();
+    }
+
+    function open(trigger) {
+      if (openTrigger && openTrigger !== trigger) close(openTrigger);
+      const menu = menuOf(trigger);
+      if (trigger.dataset.menuTrigger === 'more') placeMoreMenu(trigger, menu);
+      menu.hidden = false;
+      void menu.offsetWidth; // let the closed styles apply before animating in
+      menu.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      if (trigger.classList.contains('burger')) trigger.setAttribute('aria-label', 'Đóng menu');
+      openTrigger = trigger;
+    }
+
+    triggers.forEach(trigger => trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      trigger.getAttribute('aria-expanded') === 'true' ? close(trigger) : open(trigger);
+    }));
+
+    // Clicking a destination inside a menu closes it
+    $$('[data-menu] a', header).forEach(a => a.addEventListener('click', () => close()));
+
+    document.addEventListener('click', e => {
+      if (openTrigger && !menuOf(openTrigger).contains(e.target)) close();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && openTrigger) close(openTrigger, { focus: true });
+    });
+    const desktop = window.matchMedia('(min-width: 1101px)');
+    desktop.addEventListener('change', () => close());
+    window.addEventListener('resize', () => {
+      if (openTrigger && openTrigger.dataset.menuTrigger === 'more') placeMoreMenu(openTrigger, menuOf(openTrigger));
+    });
+    document.addEventListener('authchange', () => close());
+
+    // Mobile "More" accordion
+    const moreBtn = $('[data-mnav-more]', header);
+    const moreSub = moreBtn && $(`#${moreBtn.getAttribute('aria-controls')}`);
+    if (moreBtn && moreSub) {
+      const setMore = expanded => {
+        moreBtn.setAttribute('aria-expanded', String(expanded));
+        moreSub.classList.toggle('is-open', expanded);
+        moreSub.inert = !expanded;
+      };
+      setMore(false);
+      moreBtn.addEventListener('click', () => setMore(moreBtn.getAttribute('aria-expanded') !== 'true'));
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     Auth state (demo). Your backend should render <html data-auth="member">
+     for signed-in users; until then "Đăng nhập" / "Đăng xuất" switch the
+     header so every state can be reviewed. Also supports ?auth=member|guest.
+     ------------------------------------------------------------------------ */
+  function initAuth() {
+    const setAuth = state => {
+      document.documentElement.dataset.auth = state;
+      try { localStorage.setItem('empire-auth', state); } catch (e) { /* storage unavailable */ }
+      document.dispatchEvent(new CustomEvent('authchange', { detail: state }));
+    };
+    $$('[data-login]').forEach(btn => btn.addEventListener('click', e => {
+      e.preventDefault();
+      setAuth('member');
+    }));
+    $$('[data-logout]').forEach(btn => btn.addEventListener('click', () => setAuth('guest')));
+    window.EmpireAuth = { setAuth };
   }
 
   /* Header gets a stronger glass treatment once the page scrolls */
@@ -421,6 +517,8 @@
 
   initHeader();
   initNav();
+  initMenus();
+  initAuth();
   initLanes();
   initFeedback();
   initCounters();

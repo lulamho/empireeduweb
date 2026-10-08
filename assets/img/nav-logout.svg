@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Nav / logout / Soft gradient">
+<path id="Vector" d="M8.33333 2.5H4.16667C3.72464 2.5 3.30072 2.67559 2.98816 2.98816C2.67559 3.30072 2.5 3.72464 2.5 4.16667V15.8333C2.5 16.2754 2.67559 16.6993 2.98816 17.0118C3.30072 17.3244 3.72464 17.5 4.16667 17.5H8.33333" stroke-width="2.08333" stroke-linecap="round" stroke="url(#paint0_linear_0_371)"/>
+<path id="Vector_2" d="M7.5 10H17.5M14.1667 13.3333L17.5 10L14.1667 6.66667" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round" stroke="url(#paint1_linear_0_371)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_371" x1="2.5" y1="2.5" x2="12.634" y2="6.44102" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E98B80"/>
+<stop offset="1" stop-color="#DB3E2C"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_371" x1="7.5" y1="6.66667" x2="13.6538" y2="15.8974" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E98B80"/>
+<stop offset="1" stop-color="#DB3E2C"/>
+</linearGradient>
+</defs>
+</svg>

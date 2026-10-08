@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Nav / Quizlet / English A / Coral gradient">
+<path id="Vector" d="M5 1.66667H15C15.8841 1.66667 16.7319 2.01786 17.357 2.64298C17.9821 3.2681 18.3333 4.11595 18.3333 5V13.3333C18.3333 14.2174 17.9821 15.0652 17.357 15.6904C16.7319 16.3155 15.8841 16.6667 15 16.6667H8.33333L4.16667 19.1667V16.6667C3.43327 16.4777 2.78608 16.0446 2.33167 15.4388C1.87726 14.8329 1.64272 14.0903 1.66667 13.3333V5C1.66667 4.11595 2.01786 3.2681 2.64298 2.64298C3.2681 2.01786 4.11594 1.66667 5 1.66667Z" fill="url(#paint0_linear_0_342)"/>
+<path id="Vector_2" d="M6.16667 13.3333L9.16667 5.41667H10.8333L13.8333 13.3333H12L11.4167 11.5H8.58333L8 13.3333H6.16667ZM9.08333 10H10.9167L10 7.33333L9.08333 10Z" fill-rule="evenodd" clip-rule="evenodd" fill="white"/>
+<g id="Vector_3">
+<path d="M5 3.33333H13.3333Z" fill="white"/>
+<path d="M5 3.33333H13.3333" stroke-linecap="round" stroke="white"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_342" x1="1.665" y1="1.66667" x2="19.1443" y2="18.3153" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E98B80"/>
+<stop offset="1" stop-color="#DB3E2C"/>
+</linearGradient>
+</defs>
+</svg>

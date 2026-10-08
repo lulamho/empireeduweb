@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-auth="guest">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,14 +9,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    // Demo auth state (replace with your real session check): ?auth=member|guest or the last state saved by the demo login
+    (function () {
+      var q = new URLSearchParams(location.search).get('auth'), s = null;
+      try { s = localStorage.getItem('empire-auth'); } catch (e) {}
+      var a = q || s;
+      if (a === 'member' || a === 'guest') document.documentElement.dataset.auth = a;
+    })();
+  </script>
 </head>
 <body id="top">
 
   <!-- ============ Header ============ -->
+  <!--
+    Header has two auth states, driven by <html data-auth="guest|member">.
+    Guest: original 6-link nav + "Đăng nhập". Member: Quizlet + "More" menu, notifications and profile.
+  -->
   <header class="site-header" data-header>
     <a class="site-header__logo" href="#top" aria-label="Empire Team – Trang chủ">
-      <img src="assets/img/logo.svg" width="184" height="32" alt="Empire Team">
+      <img class="site-header__logo-desktop" src="assets/img/logo.svg" width="184" height="32" alt="Empire Team">
+      <img class="site-header__logo-mobile" src="assets/img/logo-mobile.svg" width="148" height="26" alt="Empire Team">
     </a>
 
     <nav class="nav" aria-label="Điều hướng chính">
@@ -25,13 +39,75 @@
         <li><a class="nav__link is-active" href="#top" aria-current="page"><img src="assets/img/nav-home.svg" width="20" height="20" alt="">Trang chủ</a></li>
         <li><a class="nav__link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khoá học</a></li>
         <li><a class="nav__link" href="#thi-thu"><img src="assets/img/nav-video.svg" width="20" height="20" alt="">Phòng live</a></li>
-        <li><a class="nav__link" href="#giao-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a></li>
-        <li><a class="nav__link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a></li>
-        <li><a class="nav__link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a></li>
+        <li data-guest-only><a class="nav__link" href="#giao-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a></li>
+        <li data-guest-only><a class="nav__link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a></li>
+        <li data-guest-only><a class="nav__link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a></li>
+        <li data-member-only><a class="nav__link" href="#quizlet"><img src="assets/img/nav-quizlet.svg" width="20" height="20" alt="">Quizlet</a></li>
+        <li data-member-only>
+          <button class="nav__link nav__more" type="button" aria-expanded="false" aria-controls="menu-more" data-menu-trigger="more">
+            <img src="assets/img/nav-more.svg" width="20" height="20" alt="">More<img class="chev" src="assets/img/chevron-down.svg" width="12" height="12" alt="">
+          </button>
+        </li>
       </ul>
     </nav>
 
-    <a class="btn btn--brand site-header__cta" href="#dang-ky">Đăng nhập</a>
+    <div class="site-header__actions">
+      <a class="btn btn--brand site-header__cta" href="#dang-ky" data-guest-only data-login>Đăng nhập</a>
+      <button class="hbtn notif" type="button" aria-label="Thông báo – có thông báo mới" data-member-only>
+        <span class="notif__icon"><img src="assets/img/nav-notification.svg" width="20" height="20" alt=""></span>
+        <img class="notif__dot" src="assets/img/unread-dot.svg" width="6" height="6" alt="">
+      </button>
+      <button class="profile-btn" type="button" aria-label="Tài khoản" aria-expanded="false" aria-controls="menu-profile" data-menu-trigger="profile" data-member-only>
+        <img class="profile-btn__avatar" src="assets/img/avatar-user.png" width="36" height="36" alt="">
+        <img class="chev" src="assets/img/chevron-down.svg" width="12" height="12" alt="">
+      </button>
+      <button class="hbtn burger" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="menu-mobile" data-menu-trigger="mobile">
+        <img class="burger__open" src="assets/img/menu.svg" width="22" height="22" alt="">
+        <img class="burger__close" src="assets/img/close.svg" width="22" height="22" alt="">
+      </button>
+    </div>
+
+    <!-- Desktop "More" dropdown -->
+    <div class="dropdown dropdown--more" id="menu-more" data-menu="more" hidden>
+      <a class="menu-link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a>
+      <a class="menu-link" href="#giao-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a>
+      <a class="menu-link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a>
+    </div>
+
+    <!-- Profile dropdown (desktop + mobile) -->
+    <div class="dropdown dropdown--profile" id="menu-profile" data-menu="profile" hidden>
+      <div class="account">
+        <p class="b-m account__name" data-user-name>Mã Tiểu Linh</p>
+        <p class="b-m account__email" data-user-email>matieulinh@tvb.com</p>
+      </div>
+      <hr class="account__divider">
+      <div class="account__items">
+        <a class="menu-link" href="#"><img src="assets/img/nav-personal.svg" width="20" height="20" alt="">Thông tin cá nhân</a>
+        <a class="menu-link" href="#"><img src="assets/img/nav-ability.svg" width="20" height="20" alt="">Năng lực của tôi</a>
+        <a class="menu-link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khóa học của tôi</a>
+        <button class="menu-link menu-link--danger" type="button" data-logout><img src="assets/img/nav-logout.svg" width="20" height="20" alt="">Đăng xuất</button>
+      </div>
+    </div>
+
+    <!-- Mobile navigation panel -->
+    <nav class="mnav" id="menu-mobile" data-menu="mobile" aria-label="Điều hướng" hidden>
+      <p class="b-l mnav__title">Khám phá Empire</p>
+      <a class="menu-link is-current" href="#top" aria-current="page"><img src="assets/img/nav-home.svg" width="20" height="20" alt="">Trang chủ</a>
+      <a class="menu-link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khoá học</a>
+      <a class="menu-link" href="#thi-thu"><img src="assets/img/nav-video.svg" width="20" height="20" alt="">Phòng live</a>
+      <a class="menu-link" href="#quizlet"><img src="assets/img/nav-quizlet.svg" width="20" height="20" alt="">Quizlet</a>
+      <button class="mnav__more" type="button" aria-expanded="false" aria-controls="mnav-more" data-mnav-more>
+        <span class="menu-link"><img src="assets/img/nav-more.svg" width="20" height="20" alt="">More</span>
+        <img class="chev" src="assets/img/chevron-down.svg" width="12" height="12" alt="">
+      </button>
+      <div class="mnav__sub" id="mnav-more">
+        <div class="mnav__sub-inner">
+          <a class="menu-link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a>
+          <a class="menu-link" href="#giao-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a>
+          <a class="menu-link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a>
+        </div>
+      </div>
+    </nav>
   </header>
 
   <main>
