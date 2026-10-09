@@ -22,109 +22,185 @@
 </head>
 <body id="top">
 
-  <!-- ============ Header ============ -->
   <!--
-    Header has two auth states, driven by <html data-auth="guest|member">.
-    Guest: original 6-link nav + "Đăng nhập". Member: Quizlet + "More" menu, notifications and profile.
+    Auth state lives on <html data-auth="guest|member">.
+    Guest: "Đăng nhập" in the top bar. Member: notifications in the top bar, account card in the sidebar.
   -->
-  <header class="site-header" data-header>
-    <a class="site-header__logo" href="#top" aria-label="Empire Team – Trang chủ">
-      <img class="site-header__logo-desktop" src="assets/img/logo.svg" width="184" height="32" alt="Empire Team">
-      <img class="site-header__logo-mobile" src="assets/img/logo-mobile.svg" width="148" height="26" alt="Empire Team">
+
+  <!-- ============ Top bar ============ -->
+  <header class="topbar" data-header>
+    <a class="topbar__logo" href="#top" aria-label="Empire Team – Trang chủ">
+      <img src="assets/img/logo.svg" width="184" height="32" alt="Empire Team">
     </a>
-
-    <nav class="nav" aria-label="Điều hướng chính">
-      <ul class="nav__list" data-nav>
-        <li class="nav__pill" aria-hidden="true" data-nav-pill></li>
-        <li><a class="nav__link is-active" href="#top" aria-current="page"><img src="assets/img/nav-home.svg" width="20" height="20" alt="">Trang chủ</a></li>
-        <li><a class="nav__link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khoá học</a></li>
-        <li><a class="nav__link" href="#thi-thu"><img src="assets/img/nav-video.svg" width="20" height="20" alt="">Phòng live</a></li>
-        <li data-guest-only><a class="nav__link" href="#giao-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a></li>
-        <li data-guest-only><a class="nav__link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a></li>
-        <li data-guest-only><a class="nav__link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a></li>
-        <li data-member-only><a class="nav__link" href="#quizlet"><img src="assets/img/nav-quizlet.svg" width="20" height="20" alt="">Quizlet</a></li>
-        <li data-member-only>
-          <button class="nav__link nav__more" type="button" aria-expanded="false" aria-controls="menu-more" data-menu-trigger="more">
-            <img src="assets/img/nav-more.svg" width="20" height="20" alt="">More<img class="chev" src="assets/img/chevron-down.svg" width="12" height="12" alt="">
-          </button>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="site-header__actions">
-      <a class="btn btn--brand site-header__cta" href="#dang-ky" data-guest-only data-login>Đăng nhập</a>
+    <div class="topbar__actions">
+      <a class="topbar__login" href="#dang-ky" data-guest-only data-login>Đăng nhập</a>
       <button class="hbtn notif" type="button" aria-label="Thông báo – có thông báo mới" data-member-only>
         <span class="notif__icon"><img src="assets/img/nav-notification.svg" width="20" height="20" alt=""></span>
         <img class="notif__dot" src="assets/img/unread-dot.svg" width="6" height="6" alt="">
       </button>
-      <button class="profile-btn" type="button" aria-label="Tài khoản" aria-expanded="false" aria-controls="menu-profile" data-menu-trigger="profile" data-member-only>
-        <img class="profile-btn__avatar" src="assets/img/avatar-user.png" width="36" height="36" alt="">
-        <img class="chev" src="assets/img/chevron-down.svg" width="12" height="12" alt="">
-      </button>
-      <button class="hbtn burger" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="menu-mobile" data-menu-trigger="mobile">
+      <button class="hbtn burger" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="sidebar" data-drawer-toggle>
         <img class="burger__open" src="assets/img/menu.svg" width="22" height="22" alt="">
         <img class="burger__close" src="assets/img/close.svg" width="22" height="22" alt="">
       </button>
     </div>
-
-    <!-- Desktop "More" dropdown -->
-    <div class="dropdown dropdown--more" id="menu-more" data-menu="more" hidden>
-      <a class="menu-link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a>
-      <a class="menu-link" href="#giao-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a>
-      <a class="menu-link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a>
-    </div>
-
-    <!-- Profile dropdown (desktop + mobile) -->
-    <div class="dropdown dropdown--profile" id="menu-profile" data-menu="profile" hidden>
-      <div class="account">
-        <p class="b-m account__name" data-user-name>Mã Tiểu Linh</p>
-        <p class="b-m account__email" data-user-email>matieulinh@tvb.com</p>
-      </div>
-      <hr class="account__divider">
-      <div class="account__items">
-        <a class="menu-link" href="#"><img src="assets/img/nav-personal.svg" width="20" height="20" alt="">Thông tin cá nhân</a>
-        <a class="menu-link" href="#"><img src="assets/img/nav-ability.svg" width="20" height="20" alt="">Năng lực của tôi</a>
-        <a class="menu-link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khóa học của tôi</a>
-        <button class="menu-link menu-link--danger" type="button" data-logout><img src="assets/img/nav-logout.svg" width="20" height="20" alt="">Đăng xuất</button>
-      </div>
-    </div>
-
-    <!-- Mobile navigation panel -->
-    <nav class="mnav" id="menu-mobile" data-menu="mobile" aria-label="Điều hướng" hidden>
-      <p class="b-l mnav__title">Khám phá Empire</p>
-      <a class="menu-link is-current" href="#top" aria-current="page"><img src="assets/img/nav-home.svg" width="20" height="20" alt="">Trang chủ</a>
-      <a class="menu-link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khoá học</a>
-      <a class="menu-link" href="#thi-thu"><img src="assets/img/nav-video.svg" width="20" height="20" alt="">Phòng live</a>
-      <a class="menu-link" href="#quizlet"><img src="assets/img/nav-quizlet.svg" width="20" height="20" alt="">Quizlet</a>
-      <button class="mnav__more" type="button" aria-expanded="false" aria-controls="mnav-more" data-mnav-more>
-        <span class="menu-link"><img src="assets/img/nav-more.svg" width="20" height="20" alt="">More</span>
-        <img class="chev" src="assets/img/chevron-down.svg" width="12" height="12" alt="">
-      </button>
-      <div class="mnav__sub" id="mnav-more">
-        <div class="mnav__sub-inner">
-          <a class="menu-link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a>
-          <a class="menu-link" href="#giao-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a>
-          <a class="menu-link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a>
-        </div>
-      </div>
-    </nav>
   </header>
 
-  <main>
+  <div class="layout">
 
-    <!-- ============ US-03 Vinh danh thủ khoa ============ -->
-    <section class="sec sec--honor" id="vinh-danh">
-      <span class="deco deco--trophy" style="--x:190px;--y:68px" aria-hidden="true"><img src="assets/img/deco-trophy.svg" width="112.5" height="105.5" alt=""></span>
-      <span class="deco deco--medal" style="--x:1116px;--y:78px" aria-hidden="true"><img src="assets/img/deco-medal.svg" width="124.25" height="113.5" alt=""></span>
-
-      <div class="sec-head sec-head--tight">
-        <h2 class="h-xl" data-reveal>Những gương mặt <span class="grad-text">bứt phá</span></h2>
-        <p class="b-l sec-head__sub" data-reveal>Hai kỳ thi – hai bục vinh quang. Điểm được xác thực từ hệ thống, cập nhật sau mỗi đợt thi.</p>
+    <!-- ============ Sidebar ============ -->
+    <aside class="sidebar" id="sidebar" aria-label="Điều hướng" data-sidebar>
+      <div class="account" data-member-only>
+        <button class="account__btn" type="button" aria-expanded="false" aria-controls="account-menu" data-account-toggle>
+          <img class="account__avatar" src="assets/img/avatar-sidebar.png" width="40" height="40" alt="">
+          <span class="account__id">
+            <span class="b-m account__name" data-user-name>Mã Tiểu Linh</span>
+            <span class="cap account__email" data-user-email>matieulinh@tvb.com</span>
+          </span>
+          <img class="chev" src="assets/img/chevron-down.svg" width="12" height="12" alt="">
+        </button>
+        <div class="account__menu" id="account-menu" data-account-menu>
+          <div class="account__menu-inner">
+            <a class="menu-link" href="#"><img src="assets/img/nav-personal.svg" width="20" height="20" alt="">Thông tin cá nhân</a>
+            <a class="menu-link" href="#"><img src="assets/img/nav-ability.svg" width="20" height="20" alt="">Năng lực của tôi</a>
+            <a class="menu-link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khóa học của tôi</a>
+            <button class="menu-link menu-link--danger" type="button" data-logout><img src="assets/img/nav-logout.svg" width="20" height="20" alt="">Đăng xuất</button>
+          </div>
+        </div>
       </div>
 
-      <div class="lanes wrap">
+      <nav aria-label="Điều hướng chính">
+        <ul class="side-nav" data-nav>
+          <li class="nav-pill" aria-hidden="true" data-nav-pill></li>
+          <li><a class="side-link is-active" href="#top" aria-current="page"><img src="assets/img/nav-home.svg" width="20" height="20" alt="">Trang chủ</a></li>
+          <li><a class="side-link" href="#khoa-hoc"><img src="assets/img/nav-book.svg" width="20" height="20" alt="">Khoá học</a></li>
+          <li><a class="side-link" href="#phong-live"><img src="assets/img/nav-video.svg" width="20" height="20" alt="">Phòng live</a></li>
+          <li><a class="side-link" href="#quizlet"><img src="assets/img/nav-quizlet.svg" width="20" height="20" alt="">Quizlet</a></li>
+          <li><a class="side-link" href="#thi-thu"><img src="assets/img/nav-report.svg" width="20" height="20" alt="">Thi thử</a></li>
+          <li><a class="side-link" href="#cong-dong"><img src="assets/img/nav-community.svg" width="20" height="20" alt="">Cộng đồng</a></li>
+          <li><a class="side-link" href="#thu-vien"><img src="assets/img/nav-library.svg" width="20" height="20" alt="">Thư viện</a></li>
+          <li><a class="side-link" href="#tin-tuc"><img src="assets/img/nav-news.svg" width="20" height="20" alt="">Tin tức</a></li>
+        </ul>
+      </nav>
+
+      <div class="side-extra">
+        <p class="b-m side-extra__label">Cùng Empire</p>
+        <div class="side-channels">
+          <a class="side-channel" href="#"><span class="ic ic--40"><img src="assets/img/facebook.svg" width="38.3333" height="38.3333" alt="" style="left:.83px;top:.83px"></span>Empire Team</a>
+          <a class="side-channel" href="#"><span class="exam-badge exam-badge--hsa">H</span>Luyện thi HSA</a>
+          <a class="side-channel" href="#"><span class="exam-badge exam-badge--vact">V</span>Luyện thi V-ACT</a>
+          <a class="side-channel" href="#"><span class="ic ic--40"><img src="assets/img/tiktok.svg" width="35" height="35" alt="" style="left:2.5px;top:2.5px"></span>@dgnl.empireteam</a>
+        </div>
+        <a class="b-m side-cta" href="#dang-ky">Sẵn sàng chinh phục<br>HSA &amp; V-ACT?</a>
+      </div>
+    </aside>
+    <div class="scrim" data-scrim></div>
+
+    <!-- ============ Main column ============ -->
+    <main class="main">
+
+      <!-- 01 · Carousel (slide 1 = video · autoplay 5s, paused while the video plays) -->
+      <section class="promo" aria-roledescription="carousel" aria-label="Giới thiệu Empire" data-promo data-reveal>
+        <div class="promo__viewport">
+          <div class="promo__track" data-promo-track>
+            <div class="promo__slide slide-video" role="group" aria-roledescription="slide" aria-label="Video giới thiệu Empire" data-slide>
+              <div class="slide__stage" data-stage>
+                <img class="slide__deco-1" src="assets/img/slide-deco-1.svg" width="360" height="360" alt="">
+                <img class="slide__deco-2" src="assets/img/slide-deco-2.svg" width="260" height="260" alt="">
+                <img class="slide__deco-3" src="assets/img/slide-deco-3.svg" width="120" height="120" alt="">
+                <div class="slide__dots" aria-hidden="true"><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt=""><img src="assets/img/slide-dot.svg" width="4" height="4" alt="">
+</div>
+                <span class="slide__logo"><img src="assets/img/slide-logo.svg" width="145" height="25" alt="Empire Team"></span>
+                <span class="slide__chip">▶ VIDEO GIỚI THIỆU · 02:15</span>
+                <h2 class="slide__title">Hành trình chinh phục<br>Đánh giá năng lực</h2>
+                <p class="slide__sub">Học cùng thầy cô dẫn đầu · Luyện đề sát HSA &amp; V-ACT · Đồng hành tới ngày thi</p>
+                <img class="slide__sparkle-1" src="assets/img/sparkle-1.svg" width="28" height="28" alt="">
+                <img class="slide__sparkle-2" src="assets/img/sparkle-2.svg" width="16" height="16" alt="">
+                <img class="slide__sparkle-3" src="assets/img/sparkle-3.svg" width="18" height="18" alt="">
+                <img class="slide__pulse-1" src="assets/img/pulse-ring-1.svg" width="150" height="150" alt="">
+                <img class="slide__pulse-2" src="assets/img/pulse-ring-2.svg" width="114" height="114" alt="">
+                <!-- Set data-src to the intro video URL; the player below drives it -->
+                <video class="slide__video" data-video data-src="" playsinline preload="none" hidden></video>
+                <div class="player" data-player>
+                  <button class="player__btn" type="button" aria-label="Phát video" data-play>▶</button>
+                  <span data-time>00:00</span>
+                  <span class="player__bar"><span class="player__fill" data-progress></span></span>
+                  <span data-duration>02:15</span>
+                  <button class="player__btn" type="button" aria-label="Toàn màn hình" data-fullscreen>⛶</button>
+                </div>
+                <img class="slide__kit" src="assets/img/slide-learning-kit.svg" width="288" height="270" alt="">
+              </div>
+            </div>
+            <!-- Slides 2–4 are exported from Figma as images; each links to its button's destination -->
+            <div class="promo__slide slide-img" role="group" aria-roledescription="slide" aria-label="Lộ trình 2K9 HSA &amp; V-ACT" data-slide>
+              <a href="#dang-ky"><img src="assets/img/slide-2-lo-trinh-2k9.png" width="792" height="396" loading="lazy" alt="Khai giảng tháng 10 – Lộ trình 2K9 HSA &amp; V-ACT: Nền tảng → Tổng ôn → Luyện đề thực chiến. Ưu đãi -30% cho 100 bạn đầu tiên. Đăng ký ngay"></a>
+            </div>
+            <div class="promo__slide slide-img" role="group" aria-roledescription="slide" aria-label="Thi thử ĐGNL miễn phí" data-slide>
+              <a href="#thi-thu"><img src="assets/img/slide-3-thi-thu.png" width="792" height="396" loading="lazy" alt="Miễn phí mỗi tuần – Thi thử ĐGNL chấm điểm tức thì. Đề sát cấu trúc 2027, có bảng xếp hạng toàn quốc. Thi ngay"></a>
+            </div>
+            <div class="promo__slide slide-img" role="group" aria-roledescription="slide" aria-label="2K10 xuất phát sớm" data-slide>
+              <a href="#dang-ky"><img src="assets/img/slide-4-2k10.png" width="792" height="396" loading="lazy" alt="2K10 xuất phát sớm – Đi trước 1 năm, nhẹ nhàng về đích. Lấy gốc Toán – Văn – Anh từ lớp 11 cùng Empire. Học thử miễn phí 7 ngày"></a>
+            </div>
+          </div>
+        </div>
+        <div class="promo__nav">
+          <button class="promo__arrow" type="button" aria-label="Slide trước" data-promo-prev>‹</button>
+          <div class="dots" data-promo-dots></div>
+          <button class="promo__arrow" type="button" aria-label="Slide sau" data-promo-next>›</button>
+        </div>
+      </section>
+
+      <!-- 07 · Đội ngũ giáo viên (cuộn ngang · 3 thẻ + peek) -->
+      <section class="card card--center" id="giao-vien" data-reveal>
+        <h2 class="h-l">Học cùng thầy cô dẫn đầu ĐGNL</h2>
+        <div class="hscroll" data-hscroll>
+        <article class="teacher" style="--c:#0f3a8a;--sh:15,58,138">
+          <div class="teacher__photo"><img class="sprite-1" src="assets/img/teachers-sprite.png" alt="Thầy Tus (ảnh minh hoạ)"><span class="teacher__exp">⭐ 8+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#0f3a8a">HSA</span></div>
+          <div class="teacher__id"><h3 class="h-xs">Thầy Tus</h3><p class="b-m teacher__subj">Toán · Tư duy định lượng</p></div>
+          <ul class="ticks"><li>Nhiều HS đạt 40+/50 phần Định lượng</li><li>Tác giả bộ 15 đề thực chiến HSA</li><li>Tiktok 60K followers</li></ul>
+          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
+        </article>
+        <article class="teacher" style="--c:#009cab;--sh:0,156,171">
+          <div class="teacher__photo"><img class="sprite-2" src="assets/img/teachers-sprite.png" alt="Cô Vân Anh (ảnh minh hoạ)"><span class="teacher__exp">⭐ 6+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#009cab">V-ACT</span></div>
+          <div class="teacher__id"><h3 class="h-xs">Cô Vân Anh</h3><p class="b-m teacher__subj">Ngữ văn · Tiếng Việt</p></div>
+          <ul class="ticks"><li>HS đạt 280+/300 Tiếng Việt V-ACT</li><li>Chủ biên tài liệu đọc hiểu Empire</li><li>Livestream chữa đề mỗi tuần</li></ul>
+          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
+        </article>
+        <article class="teacher" style="--c:#0f3a8a;--sh:15,58,138">
+          <div class="teacher__photo"><img class="sprite-3" src="assets/img/teachers-sprite.png" alt="Thầy Minh (ảnh minh hoạ)"><span class="teacher__exp">⭐ 7+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#0f3a8a">HSA</span></div>
+          <div class="teacher__id"><h3 class="h-xs">Thầy Minh</h3><p class="b-m teacher__subj">Tiếng Anh</p></div>
+          <ul class="ticks"><li>IELTS 8.0 · Cử nhân SP TP.HCM</li><li>HS đạt 45+/50 phần Tiếng Anh</li><li>Giáo viên thỉnh giảng THPT chuyên</li></ul>
+          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
+        </article>
+        <article class="teacher" style="--c:#009cab;--sh:0,156,171">
+          <div class="teacher__photo"><img class="sprite-4" src="assets/img/teachers-sprite.png" alt="Cô Hà (ảnh minh hoạ)"><span class="teacher__exp">⭐ 10+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#009cab">V-ACT</span></div>
+          <div class="teacher__id"><h3 class="h-xs">Cô Hà</h3><p class="b-m teacher__subj">Khoa học tự nhiên</p></div>
+          <ul class="ticks"><li>Thạc sĩ Sinh học · ĐHKHTN</li><li>HS đỗ Y Dược top đầu</li><li>Biên soạn chuyên đề Tư duy Khoa học</li></ul>
+          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
+        </article>
+
+        </div>
+      </section>
+
+      <!-- CMS stats -->
+      <section class="stats-card" aria-label="Thành tích Empire" data-reveal>
+        <div class="stats">
+        <div class="stat"><p class="h-l stat__num" data-count="120" data-suffix="K+">120K+</p><p class="b-m stat__label">Học viên đã học</p></div>
+        <div class="stat"><p class="h-l stat__num" data-count="50" data-suffix="+">50+</p><p class="b-m stat__label">Giáo viên ĐGNL</p></div>
+        <div class="stat"><p class="h-l stat__num" data-count="1000" data-suffix="+">1.000+</p><p class="b-m stat__label">Đề thi thử sát đề</p></div>
+        <div class="stat"><p class="h-l stat__num" data-count="95" data-suffix="%">95%</p><p class="b-m stat__label">Học viên hài lòng</p></div>
+
+        </div>
+      </section>
+
+      <!-- 04 · Vinh danh thủ khoa (HSA → V-ACT xếp dọc · auto-scroll 3s) -->
+      <section class="card" id="vinh-danh" data-reveal>
+        <div class="card__head">
+          <h2 class="h-l">Những gương mặt <span class="grad-text">bứt phá</span></h2>
+          <p class="b-l card__sub">Hai kỳ thi – hai bục vinh quang. Điểm được xác thực từ hệ thống, cập nhật sau mỗi đợt thi.</p>
+        </div>
+      <div class="lanes">
         <!-- Lane HSA -->
-        <article class="lane lane--hsa" data-lane data-reveal>
+        <article class="lane lane--hsa" data-lane>
           <img class="lane__deco" src="assets/img/deco-lane-hsa.svg" width="200" height="200" alt="" aria-hidden="true">
           <header class="lane__head">
             <span class="exam-badge exam-badge--hsa exam-badge--44">H</span>
@@ -160,7 +236,7 @@
         </article>
 
         <!-- Lane V-ACT -->
-        <article class="lane lane--vact" data-lane data-reveal>
+        <article class="lane lane--vact" data-lane>
           <img class="lane__deco" src="assets/img/deco-lane-vact.svg" width="200" height="200" alt="" aria-hidden="true">
           <header class="lane__head">
             <span class="exam-badge exam-badge--vact exam-badge--44">V</span>
@@ -195,23 +271,18 @@
           <div class="dots" data-lane-dots aria-hidden="true"></div>
         </article>
       </div>
-    </section>
 
-    <!-- ============ 04 · Cảm nhận & Bảng vàng ============ -->
-    <section class="sec sec--feedback" id="cam-nhan">
-      <span class="deco deco--conversation" style="--x:188px;--y:84px" aria-hidden="true"><img src="assets/img/deco-conversation.svg" width="116.5" height="112.5" alt=""></span>
-      <span class="deco deco--graduation" style="--x:1118px;--y:82px" aria-hidden="true"><img src="assets/img/deco-graduation.svg" width="120.5" height="128.25" alt=""></span>
+      </section>
 
-      <div class="sec-head sec-head--tight">
-        <h2 class="h-xl sec-head__title--light" data-reveal>Học viên Empire nói gì sau kỳ thi?</h2>
-      </div>
-
-      <div class="seg" role="tablist" aria-label="Lọc theo kỳ thi" data-reveal data-fb-filter>
+      <!-- 06 · Cảm nhận học viên (auto-slider) -->
+      <section class="card card--center card--feedback" id="cam-nhan" data-reveal>
+        <h2 class="h-l">Học viên Empire nói gì sau kỳ thi?</h2>
+      <div class="seg" role="tablist" aria-label="Lọc theo kỳ thi" data-fb-filter>
         <button class="seg__btn is-active" role="tab" aria-selected="true" data-filter="hsa">HSA (20)</button>
         <button class="seg__btn seg__btn--vact" role="tab" aria-selected="false" data-filter="vact">V-ACT (10)</button>
       </div>
 
-      <div class="fb-slider wrap" data-fb-slider data-reveal>
+      <div class="fb-slider" data-fb-slider>
         <div class="fb-slider__track" data-fb-track>
           <figure class="fb-slide" data-exam="hsa"><img src="assets/img/feedback-1.png" alt="Ảnh cảm nhận học viên HSA"></figure>
           <figure class="fb-slide" data-exam="vact"><img src="assets/img/feedback-2.png" alt="Ảnh cảm nhận học viên V-ACT"></figure>
@@ -221,55 +292,34 @@
         </div>
       </div>
 
-      <a class="btn btn--dark" href="#khoa-hoc" data-reveal>🚀 Trở thành thủ khoa tiếp theo · Xem khoá học</a>
-    </section>
+        <a class="btn btn--dark" href="#khoa-hoc">🚀 Trở thành thủ khoa tiếp theo · Xem khoá học</a>
+      </section>
 
-    <!-- ============ Stats ============ -->
-    <section class="sec sec--stats" aria-label="Thành tích Empire">
-      <img class="stats__ellipse" src="assets/img/stats-ellipse.svg" width="360" height="360" alt="" aria-hidden="true">
-      <div class="stats wrap">
-        <div class="stat" data-reveal><p class="h-xl stat__num" data-count="120" data-suffix="K+">120K+</p><p class="b-l stat__label">Học viên đã học</p></div>
-        <div class="stat" data-reveal><p class="h-xl stat__num" data-count="50" data-suffix="+">50+</p><p class="b-l stat__label">Giáo viên ĐGNL</p></div>
-        <div class="stat" data-reveal><p class="h-xl stat__num" data-count="1000" data-suffix="+">1.000+</p><p class="b-l stat__label">Đề thi thử sát đề</p></div>
-        <div class="stat" data-reveal><p class="h-xl stat__num" data-count="95" data-suffix="%">95%</p><p class="b-l stat__label">Học viên hài lòng</p></div>
-      </div>
-    </section>
-
-    <!-- ============ US-02 Hero định vị ĐGNL ============ -->
-    <section class="sec sec--hero" id="hero">
-      <img class="hero__blob" src="assets/img/hero-blob.svg" width="220" height="220" alt="" aria-hidden="true">
-
-      <div class="hero wrap">
-        <h1 class="hero__title" data-reveal>Chinh phục Đánh giá năng lực. <br><span class="hero__grad">Cùng Empire.</span></h1>
-        <p class="b-l hero__lead" data-reveal>Tự tin bước vào HSA &amp; V-ACT với lộ trình rõ ràng, <br>luyện đề thực chiến và thầy cô luôn đồng hành.</p>
-        <a class="btn btn--dark hero__cta" href="#dang-ky" data-reveal>Nhận tư vấn ngay</a>
-
+      <!-- 02 · Chinh phục ĐGNL cùng Empire (thẻ chọn kỳ thi) -->
+      <section class="card" id="ky-thi" data-reveal>
+        <h2 class="h-l">Chinh phục Đánh giá năng lực.<br><span class="grad-text grad-text--red">Cùng Empire.</span></h2>
         <div class="exam-cards">
-          <a class="exam-card exam-card--hsa" href="#khoa-hoc" data-reveal>
-            <img class="exam-card__waves" src="assets/img/hero-waves.svg" width="588" height="296" alt="" aria-hidden="true">
+          <a class="exam-card exam-card--hsa" href="#khoa-hoc">
+            <img class="exam-card__waves" src="assets/img/exam-waves-sm.svg" width="364" height="296" alt="" aria-hidden="true">
             <span class="exam-card__name"><span class="exam-card__code">HSA</span><span class="h-xs">ĐHQG Hà Nội</span></span>
             <span class="h-xs exam-card__desc">Lộ trình luyện thi HSA</span>
             <span class="h-xs exam-card__btn">Khoá HSA →</span>
-            <img class="exam-card__art" src="assets/img/hero-trophy.svg" width="176" height="176" alt="" aria-hidden="true">
+            <img class="exam-card__art" src="assets/img/exam-trophy-sm.svg" width="117" height="117" alt="" aria-hidden="true">
           </a>
-          <a class="exam-card exam-card--vact" href="#khoa-hoc" data-reveal>
-            <img class="exam-card__waves" src="assets/img/hero-waves.svg" width="588" height="296" alt="" aria-hidden="true">
+          <a class="exam-card exam-card--vact" href="#khoa-hoc">
+            <img class="exam-card__waves" src="assets/img/exam-waves-sm.svg" width="364" height="296" alt="" aria-hidden="true">
             <span class="exam-card__name"><span class="exam-card__code">V-ACT</span><span class="h-xs">ĐHQG TP.HCM</span></span>
             <span class="h-xs exam-card__desc">Lộ trình luyện thi V-ACT</span>
             <span class="h-xs exam-card__btn">Khoá V-ACT →</span>
-            <img class="exam-card__art" src="assets/img/hero-rocket.svg" width="176" height="176" alt="" aria-hidden="true">
+            <img class="exam-card__art" src="assets/img/exam-rocket-sm.svg" width="117" height="117" alt="" aria-hidden="true">
           </a>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ============ 02 · Khoá học HSA | V-ACT ============ -->
-    <section class="sec sec--courses" id="khoa-hoc">
-      <div class="sec-head sec-head--tight">
-        <h2 class="h-xl" data-reveal>Chọn kỳ thi – <span class="grad-text">chọn lộ trình</span></h2>
-      </div>
-
-      <div class="stage-filter" data-reveal>
+      <!-- 03 · Khoá học HSA → V-ACT (xếp dọc) -->
+      <section class="card" id="khoa-hoc" data-reveal>
+        <h2 class="h-l">Chọn kỳ thi – <span class="grad-text">chọn lộ trình</span></h2>
+      <div class="stage-filter">
         <a class="stage-chip" style="--c:#619f00" href="/khoa-hoc?stage=lay-goc">🌱 Lấy gốc</a>
         <a class="stage-chip" style="--c:#f99d0d" href="/khoa-hoc?stage=xuat-phat-som">🚀 Xuất phát sớm</a>
         <a class="stage-chip" style="--c:#a964f7" href="/khoa-hoc?stage=tong-on">📖 Tổng ôn</a>
@@ -277,8 +327,8 @@
         <a class="stage-chip" style="--c:#e53ebe" href="/khoa-hoc?stage=luyen-de">🎯 Luyện đề thực chiến</a>
       </div>
 
-      <div class="split wrap">
-        <div class="col col--hsa" data-reveal>
+      <div class="split">
+        <div class="col col--hsa">
           <div class="col__head">
             <span class="exam-badge exam-badge--hsa exam-badge--44">H</span>
             <div class="col__titles"><h3 class="h-m col__title">Luyện thi HSA</h3><p class="b-m col__sub">ĐHQG Hà Nội · 150 câu · 195 phút</p></div>
@@ -306,7 +356,7 @@
           </div>
         </div>
 
-        <div class="col col--vact" data-reveal>
+        <div class="col col--vact">
           <div class="col__head">
             <span class="exam-badge exam-badge--vact exam-badge--44">V</span>
             <div class="col__titles"><h3 class="h-m col__title">Luyện thi V-ACT</h3><p class="b-m col__sub">ĐHQG TP.HCM · 120 câu · 150 phút</p></div>
@@ -335,87 +385,23 @@
         </div>
       </div>
 
-      <div class="btn-row" data-reveal>
-        <a class="btn btn--dark" href="/khoa-hoc">Xem tất cả 22 khoá học</a>
-        <a class="btn btn--soft" href="#dang-ky">Chưa biết chọn khoá nào? Tư vấn miễn phí</a>
-      </div>
-    </section>
+      </section>
 
-    <!-- ============ 01 · Kênh hỗ trợ + Khoá bổ trợ miễn phí ============ -->
-    <section class="sec sec--support" id="cong-dong">
-      <div class="support wrap">
-        <img class="support__img" src="assets/img/support-students.png" width="420" height="496" alt="Học viên Empire" data-reveal>
-        <div class="support__body">
-          <div class="support__head">
-            <h2 class="h-m" data-reveal>3 fanpage lớn + TikTok đồng hành mỗi ngày</h2>
-          </div>
-          <div class="channels">
-            <a class="channel channel--drop" href="#" data-reveal>
-              <span class="ic ic--40"><img src="assets/img/facebook.svg" width="38.3333" height="38.3333" alt="" style="left:.83px;top:.83px"></span>
-              <span class="b-m channel__name">Empire Team</span>
-              <span class="cap channel__desc">Fanpage · Tin thi &amp; livestream</span>
-              <span class="chip" style="--bg:#1e69f3">Theo dõi ↗</span>
-            </a>
-            <a class="channel" href="#" data-reveal>
-              <span class="exam-badge exam-badge--hsa">H</span>
-              <span class="b-m channel__name">Luyện thi HSA</span>
-              <span class="cap channel__desc">Nhóm · Hỏi đáp &amp; đề HSA</span>
-              <span class="chip" style="--bg:#0f3a8a">Tham gia ↗</span>
-            </a>
-            <a class="channel" href="#" data-reveal>
-              <span class="exam-badge exam-badge--vact">V</span>
-              <span class="b-m channel__name">Luyện thi V-ACT</span>
-              <span class="cap channel__desc">Nhóm · Hỏi đáp &amp; đề V-ACT</span>
-              <span class="chip" style="--bg:#009cab">Tham gia ↗</span>
-            </a>
-            <a class="channel" href="#" data-reveal>
-              <span class="ic ic--40"><img src="assets/img/tiktok.svg" width="35" height="35" alt="" style="left:2.5px;top:2.5px"></span>
-              <span class="b-m channel__name">@dgnl.empireteam</span>
-              <span class="cap channel__desc">TikTok · Mẹo làm bài 60s</span>
-              <span class="chip" style="--bg:#171717">Xem ↗</span>
-            </a>
-          </div>
-          <div class="free-head" data-reveal>
-            <span class="tag"><img src="assets/img/tag-gift.svg" width="20" height="20" alt="">MIỄN PHÍ</span>
-            <p class="h-xs free-head__title">Khoá bổ trợ miễn phí cho học viên</p>
-            <a class="b-m free-head__link" href="#">Xem tất cả →</a>
-          </div>
-          <div class="free-list">
-            <a class="free" style="--c:169,100,247" href="#" data-reveal><span class="free__play">▶</span><span class="free__text"><span class="b-m free__title">Casio giải nhanh ĐGNL</span><span class="cap free__sub">12 video · Học ngay</span></span></a>
-            <a class="free" style="--c:235,85,0" href="#" data-reveal><span class="free__play">▶</span><span class="free__text"><span class="b-m free__title">Tiếng Anh nền tảng 2K10</span><span class="cap free__sub">8 video · Học ngay</span></span></a>
-            <a class="free" style="--c:97,159,0" href="#" data-reveal><span class="free__play">▶</span><span class="free__text"><span class="b-m free__title">Tư duy logic &amp; đọc hiểu</span><span class="cap free__sub">10 video · Học ngay</span></span></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ CTA bar ============ -->
-    <section class="sec sec--ctabar" aria-label="Đăng ký tư vấn">
-      <div class="ctabar ctabar--violet wrap" data-reveal>
-        <img class="ctabar__ellipse" src="assets/img/cta-ellipse.svg" width="140" height="140" alt="" aria-hidden="true">
-        <span class="ic ic--target" aria-hidden="true"><img src="assets/img/target.svg" width="18.8" height="18.8" alt=""></span>
-        <div class="ctabar__text"><p class="b-l ctabar__title">Chưa biết bắt đầu từ đâu? Nhận lộ trình HSA / V-ACT miễn phí</p><p class="cap">Đội ngũ Empire gọi lại trong 15 phút · không ràng buộc</p></div>
-        <a class="ctabar__phone" href="tel:0367491703"><img src="assets/img/phone.svg" width="20" height="20" alt="">036 749 1703</a>
-        <a class="ctabar__cta" href="#dang-ky">Đăng ký tư vấn<img src="assets/img/arrow-forward.svg" width="20" height="20" alt=""></a>
-      </div>
-    </section>
-
-    <!-- ============ 06 · Thi thử miễn phí ============ -->
-    <section class="sec sec--mock" id="thi-thu">
-      <div class="mock wrap">
+      <!-- 05 · Thi thử miễn phí — entry → /thi-thu -->
+      <section class="card card--mock" id="thi-thu" data-reveal>
         <div class="mock__copy">
-          <h2 class="h-xl mock__title" data-reveal><span class="grad-text grad-text--red">Thi thử miễn phí</span> - biết ngay mình đang ở đâu</h2>
-          <p class="b-l mock__lead" data-reveal>Đề sát cấu trúc HSA &amp; V-ACT 2027, chấm điểm ngay khi nộp bài, so tài với hàng nghìn bạn 2K9 trên bảng xếp hạng.</p>
-          <ol class="steps" data-reveal>
-            <li class="step"><span class="step__n" style="--bg:#fbbd5d">1</span>Chọn đề</li>
-            <li class="step"><span class="step__n" style="--bg:#fbbd5d">2</span>Đăng ký 30 giây</li>
-            <li class="step"><span class="step__n" style="--bg:#fbbd5d">3</span>Nhận link qua email</li>
+          <h2 class="h-l"><span class="grad-text grad-text--red">Thi thử miễn phí</span> - biết ngay mình đang ở đâu</h2>
+          <p class="b-l">Đề sát cấu trúc HSA &amp; V-ACT 2027, chấm điểm ngay khi nộp bài, so tài với hàng nghìn bạn 2K9 trên bảng xếp hạng.</p>
+          <ol class="steps">
+            <li class="step"><span class="step__n">1</span>Chọn đề</li>
+            <li class="step"><span class="step__n">2</span>Đăng ký 30 giây</li>
+            <li class="step"><span class="step__n">3</span>Nhận link qua email</li>
           </ol>
-          <div class="btn-row btn-row--start" data-reveal>
+          <div class="btn-row">
             <a class="btn btn--dark btn--xl btn--glow" href="/thi-thu">Thi ngay – Let’s do it!</a>
             <a class="btn btn--white btn--lg" href="/thi-thu#leaderboard">Xem bảng xếp hạng</a>
           </div>
-          <div class="proof" data-reveal>
+          <div class="proof">
             <span class="proof__avatars">
               <img src="assets/img/avatar-1.png" width="30" height="30" alt="">
               <img src="assets/img/avatar-2.png" width="30" height="30" alt="">
@@ -424,11 +410,11 @@
             </span>
             <span class="b-m proof__text">12.400+ lượt thi tuần này</span>
           </div>
-        </div>
 
+        </div>
         <div class="mock__visual">
-          <div data-reveal>
-            <a class="test test--tilt-r" href="/thi-thu">
+          <div class="tests">
+            <a class="test" href="/thi-thu">
               <span class="test__icon" style="--g1:#f99d0d;--g2:#db3e2c"><span class="ic ic--32"><img src="assets/img/files-hsa.svg" width="25.7778" height="29.3335" alt="" style="left:2.67px;top:.89px"></span></span>
               <span class="test__info">
                 <span class="test__chips"><span class="exam-pill" style="--g1:#f99d0d;--g2:#db3e2c;--a:145.07deg">HSA</span><span class="status status--open">● Đang mở</span></span>
@@ -439,11 +425,8 @@
                   <span><span class="ic ic--16"><img src="assets/img/users.svg" width="14.9855" height="13.3133" alt="" style="left:.4px;top:1.33px"></span>1.940</span>
                 </span>
               </span>
-              <span class="test__go" aria-hidden="true">→</span>
             </a>
-          </div>
-          <div data-reveal>
-            <a class="test test--tilt-l" href="/thi-thu">
+            <a class="test" href="/thi-thu">
               <span class="test__icon" style="--g1:#e53ebe;--g2:#a964f7"><span class="ic ic--32"><img src="assets/img/files-vact.svg" width="25.7779" height="29.3337" alt="" style="left:2.67px;top:.89px"></span></span>
               <span class="test__info">
                 <span class="test__chips"><span class="exam-pill exam-pill--wide" style="--g1:#e53ebe;--g2:#a964f7;--a:152.35deg">V-ACT</span><span class="status status--soon"><span class="ic ic--16"><img src="assets/img/hourglass.svg" width="13.3334" height="14.6668" alt="" style="left:2.22px;top:1.33px"></span>Đóng sau 3 ngày</span></span>
@@ -454,11 +437,9 @@
                   <span><span class="ic ic--16"><img src="assets/img/users-2.svg" width="14.9855" height="13.3133" alt="" style="left:.4px;top:1.33px"></span>4.820</span>
                 </span>
               </span>
-              <span class="test__go" aria-hidden="true">→</span>
             </a>
           </div>
-
-          <div class="board" id="leaderboard" data-reveal>
+          <div class="board" id="leaderboard">
             <div class="board__head"><p class="b-l board__title">Top tuần này</p><p class="cap">Hiển thị bằng nickname</p></div>
             <div class="board__tabs" role="tablist" aria-label="Bảng xếp hạng theo kỳ thi" data-tabs>
               <span class="board__ind" aria-hidden="true" data-tabs-ind></span>
@@ -471,52 +452,47 @@
               <li class="board__row"><span class="ic ic--24"><img src="assets/img/medal-3.svg" width="21.518" height="23.9879" alt="Hạng 3" style="left:1.23px;top:0"></span><span class="b-m board__name">2k9_quyet.tam</span><span class="b-l">1.095</span></li>
             </ol>
           </div>
+
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ============ 05 · Đội ngũ giáo viên ============ -->
-    <section class="sec sec--teachers" id="giao-vien">
-      <div class="sec-head sec-head--tight">
-        <h2 class="h-xl" data-reveal>Học cùng thầy cô dẫn đầu ĐGNL</h2>
-      </div>
-      <div class="teachers wrap">
-        <article class="teacher" style="--c:#0f3a8a;--sh:15,58,138" data-reveal>
-          <div class="teacher__photo"><img class="sprite-1" src="assets/img/teachers-sprite.png" alt="Thầy Tus (ảnh minh hoạ)"><span class="teacher__exp">⭐ 8+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#0f3a8a">HSA</span></div>
-          <div class="teacher__id"><h3 class="h-xs">Thầy Tus</h3><p class="b-m teacher__subj">Toán · Tư duy định lượng</p></div>
-          <ul class="ticks"><li>Nhiều HS đạt 40+/50 phần Định lượng</li><li>Tác giả bộ 15 đề thực chiến HSA</li><li>Tiktok 60K followers</li></ul>
-          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
-        </article>
-        <article class="teacher" style="--c:#009cab;--sh:0,156,171" data-reveal>
-          <div class="teacher__photo"><img class="sprite-2" src="assets/img/teachers-sprite.png" alt="Cô Vân Anh (ảnh minh hoạ)"><span class="teacher__exp">⭐ 6+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#009cab">V-ACT</span></div>
-          <div class="teacher__id"><h3 class="h-xs">Cô Vân Anh</h3><p class="b-m teacher__subj">Ngữ văn · Tiếng Việt</p></div>
-          <ul class="ticks"><li>HS đạt 280+/300 Tiếng Việt V-ACT</li><li>Chủ biên tài liệu đọc hiểu Empire</li><li>Livestream chữa đề mỗi tuần</li></ul>
-          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
-        </article>
-        <article class="teacher" style="--c:#0f3a8a;--sh:15,58,138" data-reveal>
-          <div class="teacher__photo"><img class="sprite-3" src="assets/img/teachers-sprite.png" alt="Thầy Minh (ảnh minh hoạ)"><span class="teacher__exp">⭐ 7+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#0f3a8a">HSA</span></div>
-          <div class="teacher__id"><h3 class="h-xs">Thầy Minh</h3><p class="b-m teacher__subj">Tiếng Anh</p></div>
-          <ul class="ticks"><li>IELTS 8.0 · Cử nhân SP TP.HCM</li><li>HS đạt 45+/50 phần Tiếng Anh</li><li>Giáo viên thỉnh giảng THPT chuyên</li></ul>
-          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
-        </article>
-        <article class="teacher" style="--c:#009cab;--sh:0,156,171" data-reveal>
-          <div class="teacher__photo"><img class="sprite-4" src="assets/img/teachers-sprite.png" alt="Cô Hà (ảnh minh hoạ)"><span class="teacher__exp">⭐ 10+ năm kinh nghiệm</span><span class="chip teacher__exam" style="--bg:#009cab">V-ACT</span></div>
-          <div class="teacher__id"><h3 class="h-xs">Cô Hà</h3><p class="b-m teacher__subj">Khoa học tự nhiên</p></div>
-          <ul class="ticks"><li>Thạc sĩ Sinh học · ĐHKHTN</li><li>HS đỗ Y Dược top đầu</li><li>Biên soạn chuyên đề Tư duy KH</li></ul>
-          <div class="teacher__foot"><a class="b-m teacher__link" href="#">Xem hồ sơ →</a><span class="teacher__anon">🙈 Ẩn danh: Tắt</span></div>
-        </article>
-      </div>
-      <a class="btn btn--dark" href="#dang-ky" data-reveal>Đăng ký học cùng thầy cô</a>
-    </section>
+      <!-- CTA đăng ký tư vấn -->
+      <section class="cta-card" id="dang-ky" data-reveal>
+        <img class="cta-card__deco cta-card__deco--1" src="assets/img/cta-deco-1.svg" width="300" height="300" alt="" aria-hidden="true">
+        <img class="cta-card__deco cta-card__deco--2" src="assets/img/cta-deco-2.svg" width="220" height="220" alt="" aria-hidden="true">
+        <img class="cta-card__deco cta-card__deco--3" src="assets/img/cta-deco-3.svg" width="120" height="120" alt="" aria-hidden="true">
+        <div class="cta-card__copy">
+          <h2 class="h-l">Sẵn sàng bứt phá điểm ĐGNL 2027?</h2>
+          <p class="b-l">Để lại thông tin, đội ngũ Empire sẽ gọi tư vấn lộ trình phù hợp với kỳ thi HSA hoặc V-ACT mà bạn hướng tới.</p>
+          <ul class="cta-card__chips"><li>Lộ trình cá nhân hoá</li><li>Thi thử miễn phí</li><li>Không ràng buộc</li></ul>
+        </div>
+        <form class="lead lead--card" data-lead-form novalidate>
+          <h3 class="h-s">Đăng ký tư vấn</h3>
+          <div class="input">
+            <label class="b-m input__label" for="cta-name">Họ và tên *</label>
+            <input class="input__field" id="cta-name" name="name" type="text" placeholder="Nhập họ và tên" autocomplete="name" required>
+          </div>
+          <div class="input">
+            <label class="b-m input__label" for="cta-phone">Số điện thoại *</label>
+            <input class="input__field" id="cta-phone" name="phone" type="tel" placeholder="Nhập số điện thoại" autocomplete="tel" inputmode="tel" pattern="[0-9 +]{9,13}" required>
+          </div>
+          <p class="cap lead__label" id="cta-exam-label">Kỳ thi quan tâm</p>
+          <div class="exam-toggle" role="radiogroup" aria-labelledby="cta-exam-label" data-exam-toggle>
+            <button type="button" class="exam-toggle__btn is-active" role="radio" aria-checked="true" data-value="hsa">HSA</button>
+            <button type="button" class="exam-toggle__btn exam-toggle__btn--vact" role="radio" aria-checked="false" data-value="vact">V-ACT</button>
+          </div>
+          <button class="btn btn--brand btn--submit" type="submit">Gửi thông tin</button>
+          <p class="cap lead__note" data-form-note>Empire sẽ liên hệ để tư vấn lộ trình phù hợp.</p>
+        </form>
+      </section>
 
-    <!-- ============ 07 · Tin tức ĐGNL ============ -->
-    <section class="sec sec--news" id="tin-tuc">
-      <div class="sec-head sec-head--tight">
-        <h2 class="h-xl" data-reveal>Cập nhật tin tuyển sinh mới nhất</h2>
-        <p class="b-l sec-head__sub sec-head__sub--620" data-reveal>Lịch thi, cấu trúc đề, phổ điểm và xét tuyển ĐGNL — tổng hợp tự động mỗi ngày, bấm mở bài gốc.</p>
-      </div>
-
-      <div class="ticker wrap" data-reveal>
+      <!-- 07 · Tin tức ĐGNL -->
+      <section class="card card--center" id="tin-tuc" data-reveal>
+        <div class="card__head" style="text-align:left">
+          <h2 class="h-l">Cập nhật tin tuyển sinh mới nhất</h2>
+          <p class="b-l card__sub">Lịch thi, cấu trúc đề, phổ điểm và xét tuyển ĐGNL — tổng hợp tự động mỗi ngày, bấm mở bài gốc.</p>
+        </div>
+      <div class="ticker">
         <span class="ticker__live">● Tin ĐGNL mới</span>
         <div class="ticker__viewport">
           <div class="ticker__track" data-ticker>
@@ -528,69 +504,62 @@
         <a class="ticker__more" href="#">Xem thêm →</a>
       </div>
 
-      <div class="news wrap">
-        <article class="news-card" style="--c:#009cab" data-reveal>
+        <div class="hscroll" data-hscroll>
+        <article class="news-card" style="--c:#009cab">
           <div class="news-card__img"><img class="sprite-1" src="assets/img/news-sprite.png" alt=""><span class="chip news-card__chip" style="--bg:#009cab">V-ACT</span></div>
           <div class="news-card__body"><h3 class="b-l news-card__title">Phổ điểm V-ACT 2026 đợt 1–2: phân tích chi tiết &amp; cảnh báo cho 2K9</h3><p class="cap news-card__meta">Tuổi Trẻ · 21/09/2026</p><a class="b-m news-card__link" href="#" target="_blank" rel="noopener">Đọc tiếp ↗ (mở bài gốc, tab mới)</a></div>
         </article>
-        <article class="news-card" style="--c:#0f3a8a" data-reveal>
+        <article class="news-card" style="--c:#0f3a8a">
           <div class="news-card__img"><img class="sprite-2" src="assets/img/news-sprite.png" alt=""><span class="chip news-card__chip" style="--bg:#0f3a8a">HSA</span></div>
           <div class="news-card__body"><h3 class="b-l news-card__title">ĐHQG Hà Nội công bố lịch thi HSA 2027 — mở đăng ký từ tháng 2</h3><p class="cap news-card__meta">VnExpress · 20/09/2026</p><a class="b-m news-card__link" href="#" target="_blank" rel="noopener">Đọc tiếp ↗ (mở bài gốc, tab mới)</a></div>
         </article>
-        <article class="news-card" style="--c:#a964f7" data-reveal>
+        <article class="news-card" style="--c:#a964f7">
           <div class="news-card__img"><img class="sprite-3" src="assets/img/news-sprite.png" alt=""><span class="chip news-card__chip" style="--bg:#a964f7">Tuyển sinh</span></div>
           <div class="news-card__body"><h3 class="b-l news-card__title">Hơn 100 trường xét tuyển bằng điểm ĐGNL năm 2027</h3><p class="cap news-card__meta">Dân Trí · 19/09/2026</p><a class="b-m news-card__link" href="#" target="_blank" rel="noopener">Đọc tiếp ↗ (mở bài gốc, tab mới)</a></div>
         </article>
       </div>
 
-      <a class="btn btn--outline" href="#" data-reveal>Xem tất cả tin tức</a>
-    </section>
+        <a class="btn btn--outline" href="#">Xem tất cả tin tức</a>
+      </section>
+    </main>
 
-    <!-- ============ CTA bar #2 ============ -->
-    <section class="sec sec--ctabar2" aria-label="Đăng ký tư vấn">
-      <div class="ctabar ctabar--orange wrap" data-reveal>
-        <img class="ctabar__ellipse" src="assets/img/cta-ellipse.svg" width="140" height="140" alt="" aria-hidden="true">
-        <span class="ic ic--target" aria-hidden="true"><img src="assets/img/target.svg" width="18.8" height="18.8" alt=""></span>
-        <div class="ctabar__text"><p class="b-l ctabar__title">Chưa biết bắt đầu từ đâu? Nhận lộ trình HSA / V-ACT miễn phí</p><p class="cap">Đội ngũ Empire gọi lại trong 15 phút · không ràng buộc</p></div>
-        <a class="ctabar__phone" href="tel:0367491703"><img src="assets/img/phone.svg" width="20" height="20" alt="">036 749 1703</a>
-        <a class="ctabar__cta" href="#dang-ky">Đăng ký tư vấn<img src="assets/img/arrow-forward.svg" width="20" height="20" alt=""></a>
-      </div>
-    </section>
-
-    <!-- ============ CTA đăng ký tư vấn (lead form) ============ -->
-    <section class="sec sec--lead" id="dang-ky">
-      <div class="cta-card wrap" data-reveal>
-        <img class="cta-card__deco cta-card__deco--1" src="assets/img/cta-deco-1.svg" width="300" height="300" alt="" aria-hidden="true">
-        <img class="cta-card__deco cta-card__deco--2" src="assets/img/cta-deco-2.svg" width="220" height="220" alt="" aria-hidden="true">
-        <img class="cta-card__deco cta-card__deco--3" src="assets/img/cta-deco-3.svg" width="120" height="120" alt="" aria-hidden="true">
-
-        <div class="cta-card__copy">
-          <h2 class="h-xl cta-card__title" data-reveal>Sẵn sàng bứt phá điểm ĐGNL 2027?</h2>
-          <p class="b-l cta-card__lead" data-reveal>Để lại thông tin, đội ngũ Empire sẽ gọi tư vấn lộ trình phù hợp với kỳ thi HSA hoặc V-ACT mà bạn hướng tới.</p>
-          <ul class="cta-card__chips" data-reveal><li>Lộ trình cá nhân hoá</li><li>Thi thử miễn phí</li><li>Không ràng buộc</li></ul>
+    <!-- ============ Right column (sticky) ============ -->
+    <aside class="rightcol" aria-label="Liên hệ tư vấn">
+      <form class="consult" data-lead-form novalidate>
+        <div class="consult__head">
+          <img class="consult__ellipse" src="assets/img/form-ellipse.svg" width="110" height="110" alt="" aria-hidden="true">
+          <span class="consult__chip">⚡ Gọi lại trong 15 phút</span>
+          <h2 class="h-xs">Đăng ký tư vấn miễn phí</h2>
+          <p class="cap">Nhận lộ trình HSA / V-ACT phù hợp với bạn</p>
         </div>
-
-        <form class="lead lead--card" data-lead-form data-reveal novalidate>
-          <h3 class="h-s">Đăng ký tư vấn</h3>
+        <div class="consult__fields">
           <div class="input">
-            <label class="b-m input__label" for="cta-name">Họ và tên *</label>
-            <input class="input__field" id="cta-name" name="name" type="text" placeholder="Nhập họ và tên" autocomplete="name" required>
+            <label class="b-m input__label" for="side-name">Họ và tên *</label>
+            <input class="input__field" id="side-name" name="name" type="text" placeholder="Nguyễn Minh Anh" autocomplete="name" required>
           </div>
           <div class="input">
-            <label class="b-m input__label" for="cta-phone">Số điện thoại *</label>
-            <input class="input__field" id="cta-phone" name="phone" type="tel" placeholder="Nhập số điện thoại" autocomplete="tel" inputmode="tel" pattern="[0-9 +]{9,13}" required>
+            <label class="b-m input__label" for="side-phone">Số điện thoại *</label>
+            <input class="input__field" id="side-phone" name="phone" type="tel" placeholder="0912 345 678" autocomplete="tel" inputmode="tel" pattern="[0-9 +]{9,13}" required>
           </div>
-          <p class="cap lead__label" id="cta-exam-label">Kỳ thi quan tâm (tuỳ chọn)</p>
-          <div class="exam-toggle" role="radiogroup" aria-labelledby="cta-exam-label" data-exam-toggle>
-            <button type="button" class="exam-toggle__btn exam-toggle__btn--hsa is-active" role="radio" aria-checked="true" data-value="hsa">HSA · Hà Nội</button>
-            <button type="button" class="exam-toggle__btn exam-toggle__btn--vact exam-toggle__btn--clear" role="radio" aria-checked="false" data-value="vact">V-ACT · TP.HCM</button>
+          <p class="cap lead__label" id="side-exam-label">Kỳ thi quan tâm</p>
+          <div class="exam-toggle" role="radiogroup" aria-labelledby="side-exam-label" data-exam-toggle>
+            <button type="button" class="exam-toggle__btn is-active" role="radio" aria-checked="true" data-value="hsa">HSA</button>
+            <button type="button" class="exam-toggle__btn exam-toggle__btn--vact" role="radio" aria-checked="false" data-value="vact">V-ACT</button>
           </div>
           <button class="btn btn--brand btn--submit" type="submit">Gửi thông tin</button>
-          <p class="cap lead__note" data-form-note>Empire sẽ liên hệ để tư vấn lộ trình phù hợp.</p>
-        </form>
+          <p class="cap lead__note" data-form-note>🔒 Thông tin được bảo mật · không spam</p>
+        </div>
+      </form>
+      <div class="hotline">
+        <span class="hotline__icon"><img src="assets/img/phone-green.svg" width="22" height="22" alt=""></span>
+        <span class="hotline__text">
+          <span class="cap hotline__label">Hotline tư vấn (8:00–22:00)</span>
+          <a class="h-xs" href="tel:0988585856">098 858 5856</a>
+        </span>
+        <a class="hotline__zalo" href="#">Zalo</a>
       </div>
-    </section>
-  </main>
+    </aside>
+  </div>
 
   <!-- ============ Footer ============ -->
   <footer class="footer">
@@ -638,3 +607,4 @@
   <script src="js/main.js" defer></script>
 </body>
 </html>
+

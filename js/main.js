@@ -60,7 +60,7 @@
   const isSettled = s => Math.abs(s.x - s.target) < 0.1 && Math.abs(s.v) < 0.1;
 
   /* ------------------------------------------------------------------------
-     Header navigation — one glass pill springs under the hovered item.
+     Sidebar navigation — one glass pill springs under the hovered item.
      The leading edge uses a stiff spring and the trailing edge a soft one,
      so the pill stretches like liquid while travelling and settles back.
      ------------------------------------------------------------------------ */
@@ -69,24 +69,24 @@
     const pill = $('[data-nav-pill]');
     if (!list || !pill) return;
 
-    const links = $$('.nav__link', list);
+    const links = $$('.side-link', list);
     let active = links.find(l => l.classList.contains('is-active')) || links[0];
     let under = null;
-    let left = null;
-    let right = null;
+    let start = null; // top edge
+    let end = null;   // bottom edge
     let raf = 0;
     let last = 0;
 
-    const rectOf = link => ({ l: link.offsetLeft, r: link.offsetLeft + link.offsetWidth });
+    const rectOf = link => ({ a: link.offsetTop, b: link.offsetTop + link.offsetHeight });
 
     function render() {
-      const width = Math.max(right.x - left.x, 0);
-      const speed = Math.max(Math.abs(left.v), Math.abs(right.v));
-      const squash = Math.min(speed / 9000, 0.08);
-      pill.style.width = `${width}px`;
-      pill.style.transform = `translateX(${left.x}px) scaleY(${1 - squash})`;
+      const size = Math.max(end.x - start.x, 0);
+      const speed = Math.max(Math.abs(start.v), Math.abs(end.v));
+      const squash = Math.min(speed / 9000, 0.06);
+      pill.style.height = `${size}px`;
+      pill.style.transform = `translateY(${start.x}px) scaleX(${1 - squash})`;
       pill.style.setProperty('--sheen', Math.min(speed / 1600, 1).toFixed(3));
-      pill.style.setProperty('--sheen-x', right.v >= 0 ? '78%' : '22%');
+      pill.style.setProperty('--sheen-y', end.v >= 0 ? '85%' : '15%');
     }
 
     function tick(now) {
@@ -94,12 +94,12 @@
       last = now;
       const sub = 4;
       for (let i = 0; i < sub; i++) {
-        stepSpring(left, dt / sub);
-        stepSpring(right, dt / sub);
+        stepSpring(start, dt / sub);
+        stepSpring(end, dt / sub);
       }
       render();
-      if (isSettled(left) && isSettled(right)) {
-        left.x = left.target; right.x = right.target; left.v = right.v = 0;
+      if (isSettled(start) && isSettled(end)) {
+        start.x = start.target; end.x = end.target; start.v = end.v = 0;
         render();
         raf = 0;
         return;
@@ -113,19 +113,19 @@
       under = link;
       link.classList.add('is-under');
 
-      const { l, r } = rectOf(link);
-      if (!left || instant || reduceMotion) {
-        left = createSpring(l);
-        right = createSpring(r);
+      const { a, b } = rectOf(link);
+      if (!start || instant || reduceMotion) {
+        start = createSpring(a);
+        end = createSpring(b);
         render();
         return;
       }
 
-      const movingRight = l > left.target;
-      Object.assign(movingRight ? right : left, SPRING_FAST);
-      Object.assign(movingRight ? left : right, SPRING_SLOW);
-      left.target = l;
-      right.target = r;
+      const movingDown = a > start.target;
+      Object.assign(movingDown ? end : start, SPRING_FAST);
+      Object.assign(movingDown ? start : end, SPRING_SLOW);
+      start.target = a;
+      end.target = b;
 
       if (!raf) {
         last = performance.now();
@@ -136,15 +136,13 @@
     links.forEach(link => {
       link.addEventListener('pointerenter', () => moveTo(link));
       link.addEventListener('focus', () => moveTo(link));
-      if (link.hasAttribute('data-menu-trigger')) return; // "More" opens a menu, it isn't a page
       link.addEventListener('click', () => {
         active.classList.remove('is-active');
         active.removeAttribute('aria-current');
         active = link;
         link.classList.add('is-active');
         link.setAttribute('aria-current', 'page');
-        // font-weight changes the width slightly; re-measure next frame
-        requestAnimationFrame(() => moveTo(link));
+        moveTo(link);
       });
     });
     list.addEventListener('pointerleave', () => moveTo(active));
@@ -154,84 +152,164 @@
 
     const snap = () => moveTo(under || active, true);
     window.addEventListener('resize', snap);
-    document.addEventListener('authchange', () => moveTo(active, true));
     document.fonts && document.fonts.ready.then(snap);
     moveTo(active, true);
   }
 
   /* ------------------------------------------------------------------------
-     Header menus — "More" (desktop), profile, and the mobile panel.
-     One menu open at a time; closes on outside click, Esc, link click or resize.
+     Sidebar: account card expands inline (member), and below 1024px the whole
+     sidebar becomes a drawer opened from the top bar.
      ------------------------------------------------------------------------ */
-  function initMenus() {
-    const header = $('[data-header]');
-    if (!header) return;
-    const triggers = $$('[data-menu-trigger]', header);
-    const menuOf = trigger => $(`[data-menu="${trigger.dataset.menuTrigger}"]`, header);
-    let openTrigger = null;
+  function initSidebar() {
+    const sidebar = $('[data-sidebar]');
+    if (!sidebar) return;
 
-    function placeMoreMenu(trigger, menu) {
-      const left = trigger.getBoundingClientRect().left - header.getBoundingClientRect().left;
-      menu.style.setProperty('--menu-left', `${left}px`);
+    const accountBtn = $('[data-account-toggle]', sidebar);
+    const accountMenu = $('[data-account-menu]', sidebar);
+    const setAccount = open => {
+      if (!accountBtn) return;
+      accountBtn.setAttribute('aria-expanded', String(open));
+      accountMenu.classList.toggle('is-open', open);
+      accountMenu.inert = !open;
+    };
+    if (accountBtn) {
+      setAccount(false);
+      accountBtn.addEventListener('click', () => setAccount(accountBtn.getAttribute('aria-expanded') !== 'true'));
     }
 
-    function close(trigger = openTrigger, { focus = false } = {}) {
-      if (!trigger) return;
-      const menu = menuOf(trigger);
-      trigger.setAttribute('aria-expanded', 'false');
-      if (trigger.classList.contains('burger')) trigger.setAttribute('aria-label', 'Mở menu');
-      menu.classList.remove('is-open');
-      const hide = () => { if (!menu.classList.contains('is-open')) menu.hidden = true; };
-      reduceMotion ? hide() : setTimeout(hide, 250);
-      if (openTrigger === trigger) openTrigger = null;
-      if (focus) trigger.focus();
-    }
-
-    function open(trigger) {
-      if (openTrigger && openTrigger !== trigger) close(openTrigger);
-      const menu = menuOf(trigger);
-      if (trigger.dataset.menuTrigger === 'more') placeMoreMenu(trigger, menu);
-      menu.hidden = false;
-      void menu.offsetWidth; // let the closed styles apply before animating in
-      menu.classList.add('is-open');
-      trigger.setAttribute('aria-expanded', 'true');
-      if (trigger.classList.contains('burger')) trigger.setAttribute('aria-label', 'Đóng menu');
-      openTrigger = trigger;
-    }
-
-    triggers.forEach(trigger => trigger.addEventListener('click', e => {
-      e.stopPropagation();
-      trigger.getAttribute('aria-expanded') === 'true' ? close(trigger) : open(trigger);
-    }));
-
-    // Clicking a destination inside a menu closes it
-    $$('[data-menu] a', header).forEach(a => a.addEventListener('click', () => close()));
-
-    document.addEventListener('click', e => {
-      if (openTrigger && !menuOf(openTrigger).contains(e.target)) close();
-    });
+    const toggle = $('[data-drawer-toggle]');
+    const scrim = $('[data-scrim]');
+    const drawerMode = window.matchMedia('(max-width: 1023px)');
+    const setDrawer = open => {
+      sidebar.classList.toggle('is-open', open);
+      scrim && scrim.classList.toggle('is-open', open);
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
+      }
+      sidebar.inert = drawerMode.matches && !open;
+    };
+    setDrawer(false);
+    toggle && toggle.addEventListener('click', () => setDrawer(!sidebar.classList.contains('is-open')));
+    scrim && scrim.addEventListener('click', () => setDrawer(false));
+    $$('a', sidebar).forEach(a => a.addEventListener('click', () => { if (drawerMode.matches) setDrawer(false); }));
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && openTrigger) close(openTrigger, { focus: true });
+      if (e.key === 'Escape' && sidebar.classList.contains('is-open')) { setDrawer(false); toggle && toggle.focus(); }
     });
-    const desktop = window.matchMedia('(min-width: 1101px)');
-    desktop.addEventListener('change', () => close());
-    window.addEventListener('resize', () => {
-      if (openTrigger && openTrigger.dataset.menuTrigger === 'more') placeMoreMenu(openTrigger, menuOf(openTrigger));
-    });
-    document.addEventListener('authchange', () => close());
+    drawerMode.addEventListener('change', () => setDrawer(false));
+    document.addEventListener('authchange', () => setAccount(false));
+  }
 
-    // Mobile "More" accordion
-    const moreBtn = $('[data-mnav-more]', header);
-    const moreSub = moreBtn && $(`#${moreBtn.getAttribute('aria-controls')}`);
-    if (moreBtn && moreSub) {
-      const setMore = expanded => {
-        moreBtn.setAttribute('aria-expanded', String(expanded));
-        moreSub.classList.toggle('is-open', expanded);
-        moreSub.inert = !expanded;
-      };
-      setMore(false);
-      moreBtn.addEventListener('click', () => setMore(moreBtn.getAttribute('aria-expanded') !== 'true'));
+  /* ------------------------------------------------------------------------
+     Promo carousel — slide 1 is the intro video. Autoplays every 5s when there
+     is more than one slide, and pauses while the video is playing.
+     The slide artwork is drawn on the 736×368 Figma stage and scaled to fit.
+     ------------------------------------------------------------------------ */
+  function initPromo() {
+    const promo = $('[data-promo]');
+    if (!promo) return;
+    const viewport = $('.promo__viewport', promo);
+    const track = $('[data-promo-track]', promo);
+    const slides = $$('[data-slide]', promo);
+    const dotsBox = $('[data-promo-dots]', promo);
+    const stages = $$('[data-stage]', promo);
+    let index = 0;
+    let playing = false;
+
+    const fit = () => stages.forEach(s => s.style.setProperty('--stage-scale', (viewport.clientWidth / 736).toFixed(4)));
+    fit();
+    new ResizeObserver(fit).observe(viewport);
+
+    const dots = slides.map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', `Slide ${i + 1}`);
+      b.addEventListener('click', () => go(i));
+      return dotsBox.appendChild(b);
+    });
+
+    function go(i) {
+      index = (i + slides.length) % slides.length;
+      track.style.transform = `translateX(${-index * 100}%)`;
+      dots.forEach((d, k) => d.classList.toggle('is-active', k === index));
+      slides.forEach((s, k) => s.inert = k !== index);
     }
+    $('[data-promo-prev]', promo).addEventListener('click', () => go(index - 1));
+    $('[data-promo-next]', promo).addEventListener('click', () => go(index + 1));
+    go(0);
+    if (slides.length > 1) autoplay(promo, 5000, () => { if (!playing) go(index + 1); });
+
+    // Swipe / drag between slides; a swipe never triggers the slide's link
+    let x0 = null;
+    let swiped = false;
+    viewport.addEventListener('pointerdown', e => {
+      if (e.target.closest('[data-player]')) return;
+      x0 = e.clientX; swiped = false;
+    });
+    viewport.addEventListener('pointerup', e => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0;
+      x0 = null;
+      if (Math.abs(dx) > 40) { swiped = true; go(index + (dx < 0 ? 1 : -1)); }
+    });
+    viewport.addEventListener('pointercancel', () => { x0 = null; });
+    viewport.addEventListener('click', e => { if (swiped) { e.preventDefault(); swiped = false; } }, true);
+    viewport.addEventListener('dragstart', e => e.preventDefault());
+
+    // Video player UI
+    const video = $('[data-video]', promo);
+    const playBtn = $('[data-play]', promo);
+    const time = $('[data-time]', promo);
+    const duration = $('[data-duration]', promo);
+    const progress = $('[data-progress]', promo);
+    const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+    if (!video || !playBtn) return;
+
+    playBtn.addEventListener('click', () => {
+      const src = video.dataset.src;
+      if (!src) { console.info('[Empire] Set data-src on the intro <video> to enable playback.'); return; }
+      if (!video.src) video.src = src;
+      video.hidden = false;
+      video.paused ? video.play() : video.pause();
+    });
+    video.addEventListener('play', () => { playing = true; playBtn.textContent = '❚❚'; playBtn.setAttribute('aria-label', 'Tạm dừng'); });
+    video.addEventListener('pause', () => { playing = false; playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Phát video'); });
+    video.addEventListener('loadedmetadata', () => { duration.textContent = fmt(video.duration); });
+    video.addEventListener('timeupdate', () => {
+      time.textContent = fmt(video.currentTime);
+      if (video.duration) progress.style.width = `${(video.currentTime / video.duration) * 100}%`;
+    });
+    $('[data-fullscreen]', promo).addEventListener('click', () => {
+      if (!video.hidden && video.requestFullscreen) video.requestFullscreen();
+    });
+  }
+
+  /* Horizontal card rows (teachers, news): drag with the mouse, swipe on touch */
+  function initHScroll() {
+    $$('[data-hscroll]').forEach(row => {
+      let x0 = 0;
+      let left0 = 0;
+      let moved = false;
+      row.addEventListener('pointerdown', e => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        x0 = e.clientX; left0 = row.scrollLeft; moved = false;
+        const move = ev => {
+          const dx = ev.clientX - x0;
+          if (Math.abs(dx) > 4) { moved = true; row.classList.add('is-dragging'); }
+          row.scrollLeft = left0 - dx;
+        };
+        const up = () => {
+          row.classList.remove('is-dragging');
+          window.removeEventListener('pointermove', move);
+          window.removeEventListener('pointerup', up);
+        };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+      });
+      // A drag shouldn't count as a click on the card underneath
+      row.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+      row.addEventListener('dragstart', e => e.preventDefault());
+    });
   }
 
   /* ------------------------------------------------------------------------
@@ -517,7 +595,9 @@
 
   initHeader();
   initNav();
-  initMenus();
+  initSidebar();
+  initPromo();
+  initHScroll();
   initAuth();
   initLanes();
   initFeedback();
