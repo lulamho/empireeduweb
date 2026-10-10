@@ -1,14 +1,14 @@
 <svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Nav / logout / Soft gradient">
-<path id="Vector" d="M8.33333 2.5H4.16667C3.72464 2.5 3.30072 2.67559 2.98816 2.98816C2.67559 3.30072 2.5 3.72464 2.5 4.16667V15.8333C2.5 16.2754 2.67559 16.6993 2.98816 17.0118C3.30072 17.3244 3.72464 17.5 4.16667 17.5H8.33333" stroke-width="2.08333" stroke-linecap="round" stroke="url(#paint0_linear_0_371)"/>
-<path id="Vector_2" d="M7.5 10H17.5M14.1667 13.3333L17.5 10L14.1667 6.66667" stroke-width="2.08333" stroke-linecap="round" stroke-linejoin="round" stroke="url(#paint1_linear_0_371)"/>
+<path id="Vector (Stroke)" d="M1.45801 15.833V4.16699C1.45801 3.4487 1.74404 2.75986 2.25195 2.25195C2.75986 1.74404 3.4487 1.45801 4.16699 1.45801H8.33301C8.9083 1.45801 9.375 1.9247 9.375 2.5C9.375 3.0753 8.9083 3.54199 8.33301 3.54199H4.16699C4.00123 3.54199 3.84182 3.6074 3.72461 3.72461C3.6074 3.84182 3.54199 4.00123 3.54199 4.16699V15.833C3.54199 15.9988 3.6074 16.1582 3.72461 16.2754C3.84182 16.3926 4.00123 16.458 4.16699 16.458H8.33301C8.9083 16.458 9.375 16.9247 9.375 17.5C9.375 18.0753 8.9083 18.542 8.33301 18.542H4.16699C3.4487 18.542 2.75986 18.256 2.25195 17.748C1.74404 17.2401 1.45801 16.5513 1.45801 15.833Z" fill="url(#paint0_linear_0_113)"/>
+<path id="Vector (Stroke)_2" d="M13.4297 5.93034C13.8365 5.52354 14.4965 5.52354 14.9033 5.93034L18.2363 9.26335C18.6431 9.67014 18.6431 10.3302 18.2363 10.737L14.9033 14.07C14.4965 14.4768 13.8365 14.4768 13.4297 14.07C13.0231 13.6632 13.0229 13.0031 13.4297 12.5964L14.9844 11.0417H7.5C6.9247 11.0417 6.45801 10.575 6.45801 9.99967C6.45818 9.42453 6.92481 8.95866 7.5 8.95866H14.9854L13.4297 7.403C13.0233 6.99628 13.0233 6.33705 13.4297 5.93034Z" fill="url(#paint1_linear_0_113)"/>
 </g>
 <defs>
-<linearGradient id="paint0_linear_0_371" x1="2.5" y1="2.5" x2="12.634" y2="6.44102" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_0_113" x1="2.5" y1="2.5" x2="12.634" y2="6.44102" gradientUnits="userSpaceOnUse">
 <stop stop-color="#E98B80"/>
 <stop offset="1" stop-color="#DB3E2C"/>
 </linearGradient>
-<linearGradient id="paint1_linear_0_371" x1="7.5" y1="6.66667" x2="13.6538" y2="15.8974" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint1_linear_0_113" x1="7.5" y1="6.66667" x2="13.6538" y2="15.8974" gradientUnits="userSpaceOnUse">
 <stop stop-color="#E98B80"/>
 <stop offset="1" stop-color="#DB3E2C"/>
 </linearGradient>

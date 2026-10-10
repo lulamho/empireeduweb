@@ -1,23 +1,23 @@
 <svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Nav / Notification / Soft gradient">
-<path id="Vector" d="M4.16667 13.3333C5.83333 11.6667 5 10 5.83333 6.66667C5.83333 5.5616 6.27232 4.50179 7.05372 3.72039C7.83512 2.93899 8.89493 2.5 10 2.5C11.1051 2.5 12.1649 2.93899 12.9463 3.72039C13.7277 4.50179 14.1667 5.5616 14.1667 6.66667C15 10 14.1667 11.6667 15.8333 13.3333C16.3333 14 15.8333 15 15 15H5C4.16667 15 3.66667 14 4.16667 13.3333Z" fill="url(#paint0_linear_0_351)"/>
-<path id="Vector_2" d="M7.5 16.6667C7.5 17.3297 7.76339 17.9656 8.23223 18.4344C8.70107 18.9033 9.33696 19.1667 10 19.1667C10.663 19.1667 11.2989 18.9033 11.7678 18.4344C12.2366 17.9656 12.5 17.3297 12.5 16.6667" fill="url(#paint1_linear_0_351)"/>
+<path id="Vector" d="M4.16667 13.3333C5.83333 11.6667 5 10 5.83333 6.66667C5.83333 5.5616 6.27232 4.50179 7.05372 3.72039C7.83512 2.93899 8.89493 2.5 10 2.5C11.1051 2.5 12.1649 2.93899 12.9463 3.72039C13.7277 4.50179 14.1667 5.5616 14.1667 6.66667C15 10 14.1667 11.6667 15.8333 13.3333C16.3333 14 15.8333 15 15 15H5C4.16667 15 3.66667 14 4.16667 13.3333Z" fill="url(#paint0_linear_0_51)"/>
+<path id="Vector_2" d="M7.5 16.6667C7.5 17.3297 7.76339 17.9656 8.23223 18.4344C8.70107 18.9033 9.33696 19.1667 10 19.1667C10.663 19.1667 11.2989 18.9033 11.7678 18.4344C12.2366 17.9656 12.5 17.3297 12.5 16.6667" fill="url(#paint1_linear_0_51)"/>
 <path id="Union" d="M10 3.33301C10.4602 3.33301 10.833 3.70675 10.833 4.16699C10.8327 4.627 10.4601 5 10 5C9.29512 5 8.91913 5.17559 8.71387 5.38086C8.50871 5.58618 8.33301 5.96239 8.33301 6.66699C8.33274 7.127 7.96007 7.5 7.5 7.5C7.03993 7.5 6.66726 7.127 6.66699 6.66699C6.66699 5.70533 6.90825 4.83117 7.53613 4.20312C8.1642 3.57506 9.03821 3.33301 10 3.33301Z" fill="white" fill-opacity="0.8"/>
 <g id="Vector_3">
 <path d="M9.16667 1.66667H10.8333Z" fill="black"/>
-<path d="M9.16667 1.66667H10.8333" stroke-width="1.66667" stroke-linecap="round" stroke="url(#paint2_linear_0_351)"/>
+<path d="M9.16667 1.66667H10.8333" stroke-width="1.66667" stroke-linecap="round" stroke="url(#paint2_linear_0_51)"/>
 </g>
 </g>
 <defs>
-<linearGradient id="paint0_linear_0_351" x1="3.96718" y1="2.5" x2="16.4594" y2="14.5581" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_0_51" x1="3.96718" y1="2.5" x2="16.4594" y2="14.5581" gradientUnits="userSpaceOnUse">
 <stop stop-color="#FCD290"/>
 <stop offset="1" stop-color="#F99D0D"/>
 </linearGradient>
-<linearGradient id="paint1_linear_0_351" x1="7.5" y1="16.6667" x2="9.5" y2="20.6667" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint1_linear_0_51" x1="7.5" y1="16.6667" x2="9.5" y2="20.6667" gradientUnits="userSpaceOnUse">
 <stop stop-color="#FCD290"/>
 <stop offset="1" stop-color="#F99D0D"/>
 </linearGradient>
-<linearGradient id="paint2_linear_0_351" x1="9.16667" y1="1.66667" x2="10.049" y2="3.13726" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint2_linear_0_51" x1="9.16667" y1="1.66667" x2="10.049" y2="3.13726" gradientUnits="userSpaceOnUse">
 <stop stop-color="#FCD290"/>
 <stop offset="1" stop-color="#F99D0D"/>
 </linearGradient>
