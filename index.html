@@ -32,6 +32,12 @@
     <a class="topbar__logo" href="#top" aria-label="Empire Team – Trang chủ">
       <img src="assets/img/logo.svg" width="184" height="32" alt="Empire Team">
     </a>
+    <nav class="topbar__tabs" aria-label="Lối tắt">
+      <a class="topbar__tab is-active" href="#top" aria-current="page">Trang chủ</a>
+      <a class="topbar__tab" href="#khoa-hoc">Khóa học</a>
+      <a class="topbar__tab" href="#thu-vien">Thư viện</a>
+      <a class="topbar__tab" href="#tin-tuc">Tin tức</a>
+    </nav>
     <div class="topbar__actions">
       <a class="topbar__login" href="#dang-ky" data-guest-only data-login>Đăng nhập</a>
       <button class="hbtn notif" type="button" aria-label="Thông báo – có thông báo mới" data-member-only>
@@ -68,7 +74,7 @@
         </div>
       </div>
 
-      <nav aria-label="Điều hướng chính">
+      <nav class="side-panel" aria-label="Điều hướng chính">
         <ul class="side-nav" data-nav>
           <li class="nav-pill" aria-hidden="true" data-nav-pill></li>
           <li><a class="side-link is-active" href="#top" aria-current="page"><span class="side-ic"><img src="assets/img/nav-home.svg" width="20" height="20" alt=""><img class="side-ic__on" src="assets/img/nav-home-white.svg" width="20" height="20" alt=""></span>Trang chủ</a></li>
@@ -85,10 +91,10 @@
       <div class="side-extra">
         <p class="b-m side-extra__label">Cùng Empire</p>
         <div class="side-channels">
-          <a class="side-channel" href="#"><span class="ic ic--40"><img src="assets/img/facebook.svg" width="38.3333" height="38.3333" alt="" style="left:.83px;top:.83px"></span>Empire Team</a>
-          <a class="side-channel" href="#"><span class="exam-badge exam-badge--hsa">H</span>Luyện thi HSA</a>
-          <a class="side-channel" href="#"><span class="exam-badge exam-badge--vact">V</span>Luyện thi V-ACT</a>
-          <a class="side-channel" href="#"><span class="ic ic--40"><img src="assets/img/tiktok.svg" width="35" height="35" alt="" style="left:2.5px;top:2.5px"></span>@dgnl.empireteam</a>
+          <a class="side-channel is-featured" href="#"><span class="side-channel__ic"><img src="assets/img/channel-facebook.svg" width="26.8333" height="26.8333" alt=""></span>Empire Team</a>
+          <a class="side-channel" href="#"><span class="side-channel__ic"><img src="assets/img/channel-facebook.svg" width="26.8333" height="26.8333" alt=""></span>Luyện thi HSA</a>
+          <a class="side-channel" href="#"><span class="side-channel__ic"><img src="assets/img/channel-facebook.svg" width="26.8333" height="26.8333" alt=""></span>Luyện thi V-ACT</a>
+          <a class="side-channel" href="#"><span class="side-channel__ic side-channel__ic--tiktok"><img src="assets/img/channel-tiktok.svg" width="24.5" height="24.5" alt=""></span>@dgnl.empireteam</a>
         </div>
         <a class="b-m side-cta" href="#dang-ky">Sẵn sàng chinh phục<br>HSA &amp; V-ACT?</a>
       </div>
@@ -528,9 +534,9 @@
       <form class="consult" data-lead-form novalidate>
         <div class="consult__head">
           <img class="consult__ellipse" src="assets/img/form-ellipse.svg" width="110" height="110" alt="" aria-hidden="true">
-          <span class="consult__chip">⚡ Gọi lại trong 15 phút</span>
-          <h2 class="h-xs">Đăng ký tư vấn miễn phí</h2>
-          <p class="cap">Nhận lộ trình HSA / V-ACT phù hợp với bạn</p>
+          <h2 class="consult__title">Đăng ký tư vấn miễn phí</h2>
+          <span class="consult__chip">Gọi lại trong 15 phút</span>
+          <p class="consult__sub">Nhận lộ trình HSA/ V-ACT phù hợp với bạn</p>
         </div>
         <div class="consult__fields">
           <div class="input">
@@ -541,17 +547,17 @@
             <label class="b-m input__label" for="side-phone">Số điện thoại *</label>
             <input class="input__field" id="side-phone" name="phone" type="tel" placeholder="0912 345 678" autocomplete="tel" inputmode="tel" pattern="[0-9 +]{9,13}" required>
           </div>
-          <p class="cap lead__label" id="side-exam-label">Kỳ thi quan tâm</p>
+          <p class="cap lead__label" id="side-exam-label">Kỳ thi quan tâm *</p>
           <div class="exam-toggle" role="radiogroup" aria-labelledby="side-exam-label" data-exam-toggle>
             <button type="button" class="exam-toggle__btn is-active" role="radio" aria-checked="true" data-value="hsa">HSA</button>
             <button type="button" class="exam-toggle__btn exam-toggle__btn--vact" role="radio" aria-checked="false" data-value="vact">V-ACT</button>
           </div>
-          <button class="btn btn--brand btn--submit" type="submit">Gửi thông tin</button>
-          <p class="cap lead__note" data-form-note>🔒 Thông tin được bảo mật · không spam</p>
+          <button class="btn btn--submit consult__submit" type="submit">Gửi thông tin<img src="assets/img/play-circle.svg" width="24" height="24" alt=""></button>
+          <p class="cap lead__note" data-form-note>🔒 Thông tin được bảo mật - không spam</p>
         </div>
       </form>
       <div class="hotline">
-        <span class="hotline__icon"><img src="assets/img/phone-green.svg" width="22" height="22" alt=""></span>
+        <span class="hotline__icon"><img src="assets/img/phone-white.svg" width="22" height="22" alt=""></span>
         <span class="hotline__text">
           <span class="cap hotline__label">Hotline tư vấn (8:00–22:00)</span>
           <a class="h-xs" href="tel:0988585856">098 858 5856</a>
