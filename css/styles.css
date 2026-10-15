@@ -829,8 +829,13 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
 .social .ic:hover { transform: translateY(-3px) scale(1.06); }
 .footer__row { display: flex; align-items: flex-start; gap: 8px; }
 .footer__row img { flex: none; width: 20px; height: 20px; }
-.footer__legal { display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 23px; border-top: 1px solid rgba(255, 255, 255, .35); text-align: center; }
-.footer__legal-title { font-weight: 600; }
+.footer__legal { display: flex; flex-direction: column; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, .35); }
+.footer__company { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding-bottom: 24px; }
+.footer__legal-title { margin-bottom: 10px; font-weight: 600; }
+.footer__strong { font-weight: 600; }
+.footer__company a:hover { text-decoration: underline; }
+.footer__terms { text-decoration: underline; text-underline-offset: 2px; }
+.footer__copy { padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, .35); text-align: center; }
 
 /* ==========================================================================
    Responsive
