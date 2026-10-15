@@ -16,6 +16,7 @@
   --amber-ink: #c16000;
   --cocoa: #7f6952;
   --glow: 0 0 8px rgba(229, 193, 41, .75);
+  --section-shadow: 0 8px 16px rgba(0, 0, 0, .06);
   --orange-deep: #eb5500;
   --red: #db3e2c;
   --pink: #e53ebe;
@@ -408,6 +409,7 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
   position: relative; overflow: hidden;
   display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
   padding: 20px 24px 24px; border-radius: 24px; background: var(--white);
+  box-shadow: var(--section-shadow);
 }
 .card--center { align-items: center; text-align: center; }
 .card__head { display: flex; flex-direction: column; gap: 10px; width: 100%; }
@@ -753,6 +755,7 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
   position: relative; display: flex; align-items: center; gap: 16px;
   padding: 56px 24px; border-radius: 32px; overflow: hidden;
   background: linear-gradient(114.59deg, var(--brand) 0%, var(--brand-300) 83.333%);
+  box-shadow: var(--section-shadow);
 }
 .cta-card__deco { position: absolute; max-width: none; pointer-events: none; }
 .cta-card__deco--1 { left: -90px; top: -120px; width: 300px; height: 300px; }
@@ -879,8 +882,9 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
   .stat { flex: 1 1 50%; }
   .stat:nth-child(3) { border-left: 0; }
   .lane { padding: 16px; }
-  .lane__head { flex-wrap: wrap; }
-  .col__head { flex-wrap: wrap; }
+  /* Badge on the left; the score chip / "Xem tất cả" button drops under the titles */
+  .lane__head, .col__head { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 12px; row-gap: 10px; }
+  .lane__head > :last-child, .col__head > :last-child { grid-column: 2; justify-self: start; }
   .stage-filter { margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px; }
   .footer__brand, .footer__col { flex-basis: 100%; }
   .footer__col a { white-space: normal; }
