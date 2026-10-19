@@ -588,6 +588,8 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
 .spot__school, .spot__muted { color: var(--ink-500); }
 .spot__score { width: 100%; display: flex; flex-direction: column; gap: 2px; padding: 12px 0; border-radius: 16px; white-space: nowrap; }
 .spot__score--box { background: var(--surface-50); }
+/* Large score can be wider than the narrow card; let it use the card padding so it stays centred */
+.spot__score > .h-m { margin-inline: -14px; }
 
 .portrait { position: relative; width: 100%; overflow: hidden; border-radius: 16px; flex: none; }
 .portrait img { position: absolute; top: 0; max-width: none; width: 400%; }
