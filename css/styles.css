@@ -27,8 +27,11 @@
   --hsa: #0f3a8a;
   --hsa-800: #0f357a;
   --hsa-900: #0b2555;
-  --vact: #009cab;
-  --vact-700: #00656f;
+  --vact: #55b6ff;
+  --vact-from: #45afff;
+  --vact-to: #007acc;
+  --vact-tint: #e3f2ff;
+  --vact-grad: linear-gradient(to right, var(--vact-from), var(--vact-to));
 
   --ink: #171717;
   --ink-600: #525252;
@@ -135,7 +138,23 @@ button { cursor: pointer; border: 0; background: none; padding: 0; }
 }
 .exam-badge--44 { width: 44px; height: 44px; border-radius: 14px; font-size: 24px; line-height: 32px; }
 .exam-badge--hsa { background: var(--hsa); }
-.exam-badge--vact { background: var(--vact); }
+.exam-badge--vact { background: linear-gradient(to bottom, var(--vact-from), var(--vact-to)); }
+
+/* V-ACT accents use a blue gradient as text colour */
+.vact-text,
+.teacher--vact .teacher__link, .teacher--vact .ticks li::before,
+.news-card--vact .news-card__link,
+.lane--vact .lane__max, .col--vact .course__price .b-l,
+.seg__btn--vact:not(.is-active),
+.lead .exam-toggle__btn--vact:not(.is-active) {
+  background: var(--vact-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+/* The score chip keeps its white pill behind the gradient text */
+.lane--vact .lane__max {
+  background-image: var(--vact-grad), linear-gradient(var(--white), var(--white));
+  -webkit-background-clip: text, padding-box; background-clip: text, padding-box;
+}
+.teacher--vact .teacher__link, .news-card--vact .news-card__link { text-decoration-color: var(--vact-to); }
 
 /* Exam colour themes shared by the honour lanes and course columns */
 .lane--hsa, .col--hsa {
@@ -145,10 +164,10 @@ button { cursor: pointer; border: 0; background: none; padding: 0; }
   --th-title: linear-gradient(to right, var(--red), var(--brand));
 }
 .lane--vact, .col--vact {
-  --th-rgb: 229, 62, 190; --th-c: var(--pink); --th-shadow: 234, 101, 203; --th-card: 229, 62, 190;
-  --th-bg: linear-gradient(to bottom, #fcecf8, #f6effe);
-  --th-badge: linear-gradient(to bottom, var(--pink), var(--lavender));
-  --th-title: linear-gradient(to right, #8750c6, var(--pink));
+  --th-rgb: 85, 182, 255; --th-c: var(--vact); --th-shadow: 85, 182, 255; --th-card: 85, 182, 255;
+  --th-bg: linear-gradient(to bottom, var(--vact-tint), #eef7ff);
+  --th-badge: linear-gradient(to bottom, var(--vact-from), var(--vact-to));
+  --th-title: var(--vact-grad);
 }
 .lane .exam-badge, .col .exam-badge { background: var(--th-badge); }
 .lane__title, .col__title {
@@ -385,7 +404,8 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
   font-size: 14px; line-height: 20px; font-weight: 600;
   transition: background-color .3s var(--ease-out), color .3s, border-color .3s, transform .3s var(--ease-out);
 }
-.exam-toggle__btn--vact { --tc: var(--lavender); --tc-rgb: 169, 100, 247; }
+.exam-toggle__btn--vact { --tc: var(--vact-to); --tc-rgb: 85, 182, 255; }
+.lead .exam-toggle__btn--vact.is-active { background: linear-gradient(to right, var(--vact-from), var(--vact-to)); border-color: var(--vact-from); }
 .exam-toggle__btn.is-active { background: var(--tc); border-color: var(--tc); color: var(--white); }
 .exam-toggle__btn:active { transform: scale(.97); }
 
@@ -563,6 +583,7 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
   font-size: 12px; line-height: 16px; font-weight: 600; color: var(--white);
 }
 .spot__rank--champ { background: var(--th-c); color: var(--ink); }
+.lane--vact .spot__rank { background: var(--th-c); color: var(--white); }
 .spot__info { display: flex; flex-direction: column; gap: 4px; white-space: nowrap; }
 .spot__school, .spot__muted { color: var(--ink-500); }
 .spot__score { width: 100%; display: flex; flex-direction: column; gap: 2px; padding: 12px 0; border-radius: 16px; white-space: nowrap; }
@@ -588,7 +609,7 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
   font-size: 14px; line-height: 20px; font-weight: 600; color: var(--hsa);
   transition: background-color .35s var(--ease-out), color .35s;
 }
-.seg__btn--vact { color: var(--vact); }
+.seg__btn--vact { color: var(--vact-to); }
 .seg__btn.is-active { background: var(--ink); color: var(--white); }
 
 .fb-slider { position: relative; align-self: stretch; padding: 16px 0; }
@@ -615,9 +636,9 @@ html[data-auth="member"] [data-guest-only] { display: none !important; }
   transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out);
 }
 .exam-card--hsa { --code-from: var(--brand-50); background: linear-gradient(130.41deg, var(--brand) 0%, var(--red) 71.429%); }
-.exam-card--vact { --code-from: #fcecf8; background: linear-gradient(130.41deg, var(--pink) 0%, var(--lavender) 71.429%); }
+.exam-card--vact { --code-from: var(--vact-tint); background: linear-gradient(130.41deg, var(--vact-from) 0%, var(--vact-to) 100%); }
 .exam-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(219, 62, 44, .28); }
-.exam-card--vact:hover { box-shadow: 0 20px 40px rgba(169, 100, 247, .32); }
+.exam-card--vact:hover { box-shadow: 0 20px 40px rgba(0, 122, 204, .32); }
 .exam-card__waves { position: absolute; left: 0; top: 0; width: 364px; height: 296px; max-width: none; pointer-events: none; }
 .exam-card__name { position: relative; display: flex; flex-direction: column; gap: 2px; white-space: nowrap; }
 .exam-card__code {
